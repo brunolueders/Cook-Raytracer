@@ -1,4 +1,5 @@
 # Cook Raytracer
+### Summary
 Distribution raytracer based on [Robert L. Cook's seminal 1984 paper](http://gec.di.uminho.pt/DISCIP/MCGAV/ifr0405/Artigos/Cook-DistributedRayTracing.pdf).
 
 ### Features
