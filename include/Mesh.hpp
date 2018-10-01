@@ -7,19 +7,20 @@
 /* All project code licensed under the MIT license.    */
 /*******************************************************/
 #pragma once
-#include "SubMesh.hpp"
+#include <vector>
 #include "Renderable.hpp"
+#include "Triangle.hpp"
 
 namespace cook {
 
-    using SubMeshList = std::vector<SubMesh>;
+    using TriangleList = std::vector<Triangle>;
 
     class Mesh : public Renderable {
     protected:
-        SubMeshList m_subMeshes;
+        TriangleList m_triangles;
 
     public:
-        Mesh(Material* a_material, SubMeshList a_subMeshes);
+        Mesh(Material* a_material, TriangleList a_triangles);
 
         bool intersect(const Ray& a_ray, IntersectionInfo* a_info) override;
     };
