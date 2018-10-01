@@ -1,21 +1,19 @@
 /*******************************************************/
 /* COOK-STYLE RAYTRACER                                */
 /*                                                     */
-/* Spherical renderables                               */
+/* Common interface for intersectable objects          */
 /*                                                     */
 /* Copyright (c) 2018 Bruno Lüders                     */
 /* All project code licensed under the MIT license.    */
 /*******************************************************/
 #pragma once
-#include "Renderable.hpp"
+#include "Ray.hpp"
 
 namespace cook {
 
-    class Sphere : public Renderable {
+    class Intersectable {
     public:
-        Sphere(Material* a_material);
-
-        bool intersect(const Ray& a_ray, IntersectionInfo* a_info) override;
+        virtual bool intersect(const Ray& a_ray, IntersectionInfo* a_info) = 0;
     };
 
 }

@@ -1,5 +1,6 @@
 #include "View.hpp"
 #include "Material.hpp"
+#include "Object.hpp"
 #include "Sphere.hpp"
 #include "Rectangle.hpp"
 #include "Ray.hpp"
@@ -16,12 +17,13 @@ namespace cook {
     protected:
         std::unique_ptr<View> m_view;
 
-        std::vector<std::unique_ptr<Material>> m_materials;
-        std::vector<std::unique_ptr<Object>>   m_objects;
-        std::vector<std::unique_ptr<Light>>    m_lights;
+        std::vector<std::unique_ptr<Material>>   m_materials;
+        std::vector<std::unique_ptr<Renderable>> m_renderables;
+        std::vector<std::unique_ptr<Object>>     m_objects;
+        std::vector<std::unique_ptr<Light>>      m_lights;
 
         struct {
-            const std::string outputFilename = "box10.png";
+            const std::string outputFilename = "box13.png";
 
             const size_t vpWidth{ 400 };
             const size_t vpHeight{ 300 };
@@ -29,16 +31,15 @@ namespace cook {
             const Vec3  camDefaultUp{ -Vec3::unitY };
             const Vec3  camPos{ .0f, 25.f, 55.f };
             const Vec3  camTarget{ 0.f, 25.0f, 0.f };
-            //const Vec3  camPos{ .0f, 10.f, 20.f };
-            //const Vec3  camTarget{ 0.f, 0.0f, 0.f };
+
             const float camFOV{ PI180*60.f };
-            const float camFarPlane{ 200.f };
+            const float camFarPlane{ 400.f };
             const float camFocalLength{ 55.f };
             const float camAperture{ 1.f };
 
-            const unsigned numSubpixels{ 4 };
-            const unsigned numSamplesPerSubpixel{ 20 };
-            const unsigned maxRecursionDepth{ 6 };
+            const unsigned numSubpixels{ 2 };
+            const unsigned numSamplesPerSubpixel{ 2 };
+            const unsigned maxRecursionDepth{ 3 };
             
             const Colour backgroundColour{};
             const Colour ambientLightColour{ .2f, .2f, .2f };
@@ -52,28 +53,6 @@ namespace cook {
             m_view = std::make_unique<View>(m_settings.vpWidth, m_settings.vpHeight, m_settings.camPos, m_settings.camTarget, m_settings.camDefaultUp,
                                             m_settings.camFOV, m_settings.camFarPlane, m_settings.camFocalLength, m_settings.camAperture);
 
-            /*m_materials.emplace_back(new Material{ Colour{ .9f, .9f, .9f }, Colour{ .4f, .4f, .4f }, Colour{}, Colour{}, 1.f, 1.f });
-            m_materials.emplace_back(new Material{ Colour{.9f, .9f, .9f}, Colour{}, Colour{1.f, 1.f, 1.f}, Colour{}, 300.f, 1.f });
-            m_materials.emplace_back(new Material{ Colour{.9f, .9f, .9f}, Colour{}, Colour{1.f, 1.f, 1.f}, Colour{}, 10.f, 1.f });
-            m_materials.emplace_back(new Material{ Colour{.9f, .9f, .9f}, Colour{}, Colour{.8f, .8f, .8f}, Colour{}, 1.f, 1.f });
-
-            m_objects.emplace_back(new Rectangle{ m_materials[0].get() });
-            m_objects.back()->transform().setScale(Vec3{ 50.f, 50.f, 50.f });
-
-            m_objects.emplace_back(new Sphere{ m_materials[1].get() });
-            m_objects.back()->transform().setScale(Vec3{ 5.f, 5.f, 5.f });
-            m_objects.back()->transform().setPosition(Vec3{ -10.f, 5.f, 0.f });
-
-            m_objects.emplace_back(new Sphere{ m_materials[2].get() });
-            m_objects.back()->transform().setScale(Vec3{ 5.f, 5.f, 5.f });
-            m_objects.back()->transform().setPosition(Vec3{ 0.f, 5.f, 0.f });
-
-            m_objects.emplace_back(new Sphere{ m_materials[3].get() });
-            m_objects.back()->transform().setScale(Vec3{ 5.f, 5.f, 5.f });
-            m_objects.back()->transform().setPosition(Vec3{ 10.f, 5.f, 0.f });
-
-            m_lights.emplace_back(new Light{ Vec3{ 0.f, 40.f, 0.f }, Colour{ 1.2f, 1.2f, 1.2f } });*/
-
             m_materials.emplace_back(new Material{ Colour{.9f, .9f, .9f}, Colour{.9f, .9f, .9f}, Colour{}, Colour{}, 1.f, 1.f, 1.f });
             m_materials.emplace_back(new Material{ Colour{1.f, .4f, .4f}, Colour{1.f, .4f, .4f}, Colour{}, Colour{}, 1.f, 1.f, 1.f });
             m_materials.emplace_back(new Material{ Colour{.4f, .4f, 1.f}, Colour{.4f, .4f, 1.f}, Colour{}, Colour{}, 1.f, 1.f, 1.f });
@@ -82,38 +61,44 @@ namespace cook {
             m_materials.emplace_back(new Material{ Colour{ .4f, .2f, .6f }, Colour{.4f, .2f, .6f}, Colour{.4f, .2f, .6f}, Colour{}, 1000.f, 1.f, 1.f });
             m_materials.emplace_back(new Material{ Colour{ .3f, .6f, .8f }, Colour{.3f, .6f, .8f}, Colour{}, Colour{}, 1.f, 1.f, 1.f });
 
-            m_objects.emplace_back(new Rectangle{ m_materials[0].get() });
+            m_renderables.emplace_back(new Rectangle{ m_materials[0].get() });
+            m_objects.push_back(std::make_unique<Object>(m_renderables.back().get()));
             m_objects.back()->transform().setScale(Vec3{ 50.f, 50.f, 50.f });
 
-            m_objects.emplace_back(new Rectangle{ m_materials[0].get() });
+            m_objects.push_back(std::make_unique<Object>(m_renderables.back().get()));
             m_objects.back()->transform().setPosition(Vec3{ 0.f, 50.f, 0.f });
             m_objects.back()->transform().setScale(Vec3{ 50.f, 50.f, 50.f });
             m_objects.back()->transform().setRotation(Vec3{ 180.f, 0.f, 0.f });
 
-            m_objects.emplace_back(new Rectangle{ m_materials[0].get() });
+            m_objects.push_back(std::make_unique<Object>(m_renderables.back().get()));
             m_objects.back()->transform().setPosition(Vec3{ 0.f, 25.f, -25.f });
             m_objects.back()->transform().setScale(Vec3{ 50.f, 50.f, 50.f });
-            m_objects.back()->transform().setRotation(Vec3{ -90.f, 0.f, 0.f });
+            m_objects.back()->transform().setRotation(Vec3{ 90.f, 0.f, 0.f });
 
-            m_objects.emplace_back(new Rectangle{ m_materials[1].get() });
+            m_renderables.emplace_back(new Rectangle{ m_materials[1].get() });
+            m_objects.push_back(std::make_unique<Object>(m_renderables.back().get()));
             m_objects.back()->transform().setPosition(Vec3{ 25.f, 25.f, 0.f });
-            m_objects.back()->transform().setScale(Vec3{ 50.f, 50.f, 50.f });
-            m_objects.back()->transform().setRotation(Vec3{ 0.f, 0.f, -90.f });
-
-            m_objects.emplace_back(new Rectangle{ m_materials[2].get() });
-            m_objects.back()->transform().setPosition(Vec3{ -25.f, 25.f, 0.f });
             m_objects.back()->transform().setScale(Vec3{ 50.f, 50.f, 50.f });
             m_objects.back()->transform().setRotation(Vec3{ 0.f, 0.f, 90.f });
 
-            m_objects.emplace_back(new Sphere{ m_materials[3].get() });
+            m_renderables.emplace_back(new Rectangle{ m_materials[2].get() });
+            m_objects.push_back(std::make_unique<Object>(m_renderables.back().get()));
+            m_objects.back()->transform().setPosition(Vec3{ -25.f, 25.f, 0.f });
+            m_objects.back()->transform().setScale(Vec3{ 50.f, 50.f, 50.f });
+            m_objects.back()->transform().setRotation(Vec3{ 0.f, 0.f, -90.f });
+
+            m_renderables.emplace_back(new Sphere{ m_materials[3].get() });
+            m_objects.push_back(std::make_unique<Object>(m_renderables.back().get()));
             m_objects.back()->transform().setPosition(Vec3{ 10.f, 10.f, -5.f });
             m_objects.back()->transform().setScale(Vec3{ 10.f, 10.f, 10.f });
 
-            m_objects.emplace_back(new Sphere{ m_materials[4].get() });
+            m_renderables.emplace_back(new Sphere{ m_materials[4].get() });
+            m_objects.push_back(std::make_unique<Object>(m_renderables.back().get()));
             m_objects.back()->transform().setPosition(Vec3{ -10.f, 30.f, 0.f });
             m_objects.back()->transform().setScale(Vec3{ 8.f, 8.f, 8.f });
 
-            m_objects.emplace_back(new Sphere{ m_materials[5].get() });
+            m_renderables.emplace_back(new Sphere{ m_materials[5].get() });
+            m_objects.push_back(std::make_unique<Object>(m_renderables.back().get()));
             m_objects.back()->transform().setPosition(Vec3{ -5.f, 6.f, 5.f });
             m_objects.back()->transform().setScale(Vec3{ 6.f, 6.f, 6.f });
 
@@ -156,7 +141,7 @@ namespace cook {
             auto colour = m_settings.backgroundColour;
             IntersectionInfo info;
             if(closestIntersection(a_ray, &info)) {
-                const auto& mat = m_objects[info.index]->material();
+                const auto& mat = m_objects[info.index]->renderable()->material();
                 auto eps = 1e-3f;
 
                 // Shadow rays
