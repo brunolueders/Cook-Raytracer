@@ -132,9 +132,11 @@ namespace cook {
     }
 
     bool Mat44::operator==(const Mat44 & a_b) const {
+        static const auto tol = 1e-4f;
         for(int i = 0; i < 4; i++) {
             for(int j = 0; j < 4; j++) {
-                if(m_coeffs[i][j] != a_b.m_coeffs[i][j]) {
+                auto diff = m_coeffs[i][j] - a_b.m_coeffs[i][j];
+                if(abs(diff) > tol) {
                     return false;
                 }
             }

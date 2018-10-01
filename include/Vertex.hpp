@@ -1,21 +1,26 @@
 /*******************************************************/
 /* COOK-STYLE RAYTRACER                                */
 /*                                                     */
-/* Spherical renderables                               */
+/* Mesh vertices                                       */
 /*                                                     */
 /* Copyright (c) 2018 Bruno Lüders                     */
 /* All project code licensed under the MIT license.    */
 /*******************************************************/
 #pragma once
-#include "Renderable.hpp"
+#include "Vec3.hpp"
+#include "Vec2.hpp"
 
 namespace cook {
 
-    class Sphere : public Renderable {
+    class Vertex {
     public:
-        Sphere(Material* a_material);
+        Vec3 position;
+        Vec2 texCoords;
+        Vec3 normal;
 
-        bool intersect(const Ray& a_ray, IntersectionInfo* a_info) override;
+    public:
+        Vertex();
+        Vertex(Vec3 a_position, Vec2 a_texCoords, Vec3 a_normal);
     };
 
 }

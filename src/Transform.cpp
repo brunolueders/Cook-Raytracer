@@ -144,14 +144,6 @@ namespace cook {
         translMatrix(1, 3) = -m_position.y;
         translMatrix(2, 3) = -m_position.z;
 
-        rotMatrix(0, 1) = cosX*sinZ + sinX*sinY*cosZ;
-        rotMatrix(0, 2) = sinX*sinZ - cosX*sinY*cosZ;
-        rotMatrix(1, 0) = -cosY*sinZ;
-        rotMatrix(1, 1) = cosX*cosZ - sinX*sinY*sinZ;
-        rotMatrix(1, 2) = sinX*cosZ + cosX*sinY*sinZ;
-        rotMatrix(2, 0) = sinY;
-        rotMatrix(2, 1) = -sinX*cosY;
-
         m_invMatrix = scaleMatrix*rotMatrix.transpose()*translMatrix;
         m_matrixUpdated = true;
     }

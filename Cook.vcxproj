@@ -113,16 +113,23 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="include\Intersectable.hpp" />
     <ClInclude Include="include\Light.hpp" />
     <ClInclude Include="include\Mat44.hpp" />
     <ClInclude Include="include\Material.hpp" />
+    <ClInclude Include="include\Mesh.hpp" />
     <ClInclude Include="include\Object.hpp" />
     <ClInclude Include="include\Ray.hpp" />
     <ClInclude Include="include\Rectangle.hpp" />
+    <ClInclude Include="include\Renderable.hpp" />
     <ClInclude Include="include\Sphere.hpp" />
+    <ClInclude Include="include\SubMesh.hpp" />
     <ClInclude Include="include\Transform.hpp" />
+    <ClInclude Include="include\Triangle.hpp" />
     <ClInclude Include="include\Util.hpp" />
+    <ClInclude Include="include\Vec2.hpp" />
     <ClInclude Include="include\Vec3.hpp" />
+    <ClInclude Include="include\Vertex.hpp" />
     <ClInclude Include="include\View.hpp" />
     <ClInclude Include="lodepng\lodepng.h" />
   </ItemGroup>
@@ -132,13 +139,19 @@
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Mat44.cpp" />
     <ClCompile Include="src\Material.cpp" />
+    <ClCompile Include="src\Mesh.cpp" />
     <ClCompile Include="src\Object.cpp" />
     <ClCompile Include="src\Ray.cpp" />
     <ClCompile Include="src\Rectangle.cpp" />
+    <ClCompile Include="src\Renderable.cpp" />
     <ClCompile Include="src\Sphere.cpp" />
+    <ClCompile Include="src\SubMesh.cpp" />
     <ClCompile Include="src\Transform.cpp" />
+    <ClCompile Include="src\Triangle.cpp" />
     <ClCompile Include="src\Util.cpp" />
+    <ClCompile Include="src\Vec2.cpp" />
     <ClCompile Include="src\Vec3.cpp" />
+    <ClCompile Include="src\Vertex.cpp" />
     <ClCompile Include="src\View.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

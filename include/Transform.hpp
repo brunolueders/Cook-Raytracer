@@ -19,7 +19,7 @@ namespace cook{
         Mat44 m_matrix; // Combined transform matrix (local to world)
         Mat44 m_invMatrix; // Inverse transform matrix (world to local)
         bool  m_matrixUpdated{ false };
-        Vec3  m_position, m_rotation, m_scale;
+        Vec3  m_position, m_rotation, m_scale{ 1.f, 1.f, 1.f };
 
     public:
         Transform();

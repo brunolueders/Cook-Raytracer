@@ -1,19 +1,25 @@
 /*******************************************************/
 /* COOK-STYLE RAYTRACER                                */
 /*                                                     */
-/* Spherical renderables                               */
+/* Sub-meshes (a.k.a. triangle groups)                 */
 /*                                                     */
 /* Copyright (c) 2018 Bruno Lüders                     */
 /* All project code licensed under the MIT license.    */
 /*******************************************************/
 #pragma once
-#include "Renderable.hpp"
+#include <vector>
+#include "Triangle.hpp"
 
 namespace cook {
 
-    class Sphere : public Renderable {
+    using TriangleList = std::vector<Triangle>;
+
+    class SubMesh : public Intersectable {
+    protected:
+        TriangleList m_faces;
+
     public:
-        Sphere(Material* a_material);
+        SubMesh(TriangleList a_faces);
 
         bool intersect(const Ray& a_ray, IntersectionInfo* a_info) override;
     };
