@@ -1,5 +1,4 @@
 #include "Triangle.hpp"
-#include "SubMesh.hpp"
 
 namespace cook {
 

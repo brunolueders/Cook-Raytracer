@@ -123,7 +123,6 @@
     <ClInclude Include="include\Rectangle.hpp" />
     <ClInclude Include="include\Renderable.hpp" />
     <ClInclude Include="include\Sphere.hpp" />
-    <ClInclude Include="include\SubMesh.hpp" />
     <ClInclude Include="include\Transform.hpp" />
     <ClInclude Include="include\Triangle.hpp" />
     <ClInclude Include="include\Util.hpp" />
@@ -145,7 +144,6 @@
     <ClCompile Include="src\Rectangle.cpp" />
     <ClCompile Include="src\Renderable.cpp" />
     <ClCompile Include="src\Sphere.cpp" />
-    <ClCompile Include="src\SubMesh.cpp" />
     <ClCompile Include="src\Transform.cpp" />
     <ClCompile Include="src\Triangle.cpp" />
     <ClCompile Include="src\Util.cpp" />
