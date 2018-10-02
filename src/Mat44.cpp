@@ -48,6 +48,18 @@ namespace cook {
         return c;
     }
 
+    bool Mat44::closeEnough(const Mat44& a_b, float a_tol) const {
+        for(int i = 0; i < 4; i++) {
+            for(int j = 0; j < 4; j++) {
+                auto diff = m_coeffs[i][j] - a_b.m_coeffs[i][j];
+                if(abs(diff) > a_tol) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
     Mat44 & Mat44::operator+=(const Mat44 & a_b) {
         for(int i = 0; i < 4; i++) {
             for(int j = 0; j < 4; j++) {
@@ -132,11 +144,9 @@ namespace cook {
     }
 
     bool Mat44::operator==(const Mat44 & a_b) const {
-        static const auto tol = 1e-4f;
         for(int i = 0; i < 4; i++) {
             for(int j = 0; j < 4; j++) {
-                auto diff = m_coeffs[i][j] - a_b.m_coeffs[i][j];
-                if(abs(diff) > tol) {
+                if(m_coeffs[i][j] != a_b.m_coeffs[i][j]) {
                     return false;
                 }
             }

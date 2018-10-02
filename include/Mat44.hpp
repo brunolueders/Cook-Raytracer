@@ -28,6 +28,8 @@ namespace cook {
 
         Mat44 transpose() const;
 
+        bool closeEnough(const Mat44& a_b, float a_tol) const;
+
         Mat44& operator+=(const Mat44& a_b);
         Mat44& operator-=(const Mat44& a_b);
         Mat44& operator*=(const Mat44& a_b);
