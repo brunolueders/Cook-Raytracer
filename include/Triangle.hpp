@@ -12,6 +12,7 @@
 
 namespace cook {
 
+    // Represents a triangle with three vertices located anywhere in space
     class Triangle : public Intersectable {
     protected:
         Vertex m_v0, m_v1, m_v2;

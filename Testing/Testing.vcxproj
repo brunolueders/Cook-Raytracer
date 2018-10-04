@@ -103,7 +103,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>$(VCInstallDir)UnitTest\lib;../$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Vec2.obj;Vec3.obj;Mat44.obj;Transform.obj;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Vec2.obj;Vec3.obj;Mat44.obj;Transform.obj;Ray.obj;Renderable.obj;Rectangle.obj;Sphere.obj;Triangle.obj;Vertex.obj;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -118,7 +118,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <AdditionalLibraryDirectories>$(VCInstallDir)UnitTest\lib;../$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Vec2.obj;Vec3.obj;Mat44.obj;Transform.obj;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Vec2.obj;Vec3.obj;Mat44.obj;Transform.obj;Ray.obj;Renderable.obj;Rectangle.obj;Sphere.obj;Triangle.obj;Vertex.obj;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -154,6 +154,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\IntersectionTest.cpp" />
     <ClCompile Include="src\stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
