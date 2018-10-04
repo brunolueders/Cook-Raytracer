@@ -28,6 +28,8 @@ namespace cook {
 
         Vec3& normalize();
         Vec3& clamp(const float a_min, const float a_max);
+        
+        bool closeEnough(const Vec3& a_b, float a_tol);
 
         Vec3& operator+=(const Vec3& a_b);
         Vec3& operator-=(const Vec3& a_b);

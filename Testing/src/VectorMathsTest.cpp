@@ -1,8 +1,8 @@
 #include "stdafx.h"
 #include "CppUnitTest.h"
-#include "../include/Vec2.hpp"
-#include "../include/Vec3.hpp"
-#include "../include/Mat44.hpp"
+#include "../../include/Vec2.hpp"
+#include "../../include/Vec3.hpp"
+#include "../../include/Mat44.hpp"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -57,6 +57,13 @@ namespace Testing {
         TEST_METHOD(Vec3_Clamp) {
             cook::Vec3 v{ .85f, 1.2f, -.01f };
             Assert::IsTrue(v.clamp(0.f, 1.f) == cook::Vec3{ .85f, 1.f, 0.f });
+        }
+
+        TEST_METHOD(Vec3_CloseEnough) {
+            cook::Vec3 v{ 2.f, 0.f, -1.f };
+            cook::Vec3 u{ 2.f, -0.001f, -0.999f };
+            Assert::IsTrue(v.closeEnough(u, 1e-2f));
+            Assert::IsFalse(v.closeEnough(u, 1e-4f));
         }
 
         TEST_METHOD(Vec3_Arithmetic) {
