@@ -24,6 +24,9 @@ namespace cook {
         float  radius() const;
         Colour colour() const;
 
+        // Takes a point on a surface, the surface normal and the intersecting ray's
+        // prototype and returns a random sampling point on the light to cast a
+        // shadow ray towards
         Vec3 sample(const Vec3& a_pos, const Vec3& a_normal, size_t a_prototype) const;
     };
 

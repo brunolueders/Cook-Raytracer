@@ -11,6 +11,7 @@
 
 namespace cook {
 
+    // Represents the unit rectangle [-0.5,0.5]x[-0.5,0.5] in the xz-plane
     class Rectangle : public Renderable {
     public:
         Rectangle(Material* a_material);

@@ -11,6 +11,7 @@
 
 namespace cook {
 
+    // Represents the unit sphere centred at the origin
     class Sphere : public Renderable {
     public:
         Sphere(Material* a_material);

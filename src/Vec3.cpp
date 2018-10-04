@@ -51,6 +51,13 @@ namespace cook {
         return *this;
     }
 
+    bool Vec3::closeEnough(const Vec3& a_b, float a_tol) {
+        auto absDx = abs(x - a_b.x);
+        auto absDy = abs(y - a_b.y);
+        auto absDz = abs(z - a_b.z);
+        return (absDx < a_tol) && (absDy < a_tol) && (absDz < a_tol);
+    }
+
     Vec3& Vec3::operator+=(const Vec3& a_b) {
         x += a_b.x;
         y += a_b.y;

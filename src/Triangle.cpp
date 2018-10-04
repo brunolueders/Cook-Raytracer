@@ -1,5 +1,4 @@
 #include "Triangle.hpp"
-#include "SubMesh.hpp"
 
 namespace cook {
 
@@ -18,7 +17,7 @@ namespace cook {
 
         auto p = a_ray.direction().cross(e2);
         auto det = e1.dot(p);
-        if(det < 0.f) {
+        if(det == 0.f) {
             return false;
         }
 
