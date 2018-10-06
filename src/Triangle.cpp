@@ -44,4 +44,16 @@ namespace cook {
         return false;
     }
 
+    Vertex Triangle::v0() const {
+        return m_v0;
+    }
+
+    Vertex Triangle::v1() const {
+        return m_v1;
+    }
+
+    Vertex Triangle::v2() const {
+        return m_v2;
+    }
+
 }

@@ -1,6 +1,5 @@
 #include "Vec3.hpp"
 #include <cmath>
-#include <algorithm>
 
 namespace cook {
 
@@ -41,13 +40,6 @@ namespace cook {
         if(len > 0.f) {
             return operator/=(len);
         }
-        return *this;
-    }
-
-    Vec3& Vec3::clamp(const float a_min, const float a_max) {
-        x = std::min(a_max, std::max(a_min, x));
-        y = std::min(a_max, std::max(a_min, y));
-        z = std::min(a_max, std::max(a_min, z));
         return *this;
     }
 

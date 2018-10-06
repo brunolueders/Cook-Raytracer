@@ -8,6 +8,7 @@
 /*******************************************************/
 #pragma once
 #include "Vec3.hpp"
+#include "Colour.hpp"
 
 namespace cook {
 

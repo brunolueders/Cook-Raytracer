@@ -75,7 +75,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(ProjectDir)include;$(ProjectDir)lodepng</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)include;$(ProjectDir)lodepng;$(ProjectDir)nlohmann</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -92,7 +92,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(ProjectDir)include;$(ProjectDir)lodepng</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)include;$(ProjectDir)lodepng;$(ProjectDir)nlohmann</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -113,6 +113,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="include\Colour.hpp" />
     <ClInclude Include="include\Intersectable.hpp" />
     <ClInclude Include="include\Light.hpp" />
     <ClInclude Include="include\Mat44.hpp" />
@@ -122,6 +123,8 @@
     <ClInclude Include="include\Ray.hpp" />
     <ClInclude Include="include\Rectangle.hpp" />
     <ClInclude Include="include\Renderable.hpp" />
+    <ClInclude Include="include\ResourceMap.hpp" />
+    <ClInclude Include="include\ResourceParsing.hpp" />
     <ClInclude Include="include\Sphere.hpp" />
     <ClInclude Include="include\Transform.hpp" />
     <ClInclude Include="include\Triangle.hpp" />
@@ -131,9 +134,11 @@
     <ClInclude Include="include\Vertex.hpp" />
     <ClInclude Include="include\View.hpp" />
     <ClInclude Include="lodepng\lodepng.h" />
+    <ClInclude Include="nlohmann\json.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="lodepng\lodepng.cpp" />
+    <ClCompile Include="src\Colour.cpp" />
     <ClCompile Include="src\Light.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Mat44.cpp" />
@@ -143,6 +148,8 @@
     <ClCompile Include="src\Ray.cpp" />
     <ClCompile Include="src\Rectangle.cpp" />
     <ClCompile Include="src\Renderable.cpp" />
+    <ClCompile Include="src\ResourceMap.cpp" />
+    <ClCompile Include="src\ResourceParsing.cpp" />
     <ClCompile Include="src\Sphere.cpp" />
     <ClCompile Include="src\Transform.cpp" />
     <ClCompile Include="src\Triangle.cpp" />

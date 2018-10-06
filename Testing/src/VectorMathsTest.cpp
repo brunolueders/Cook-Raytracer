@@ -21,11 +21,6 @@ namespace Testing {
             Assert::AreEqual(v.dot(u), -5.5f);
         }
 
-        TEST_METHOD(Vec2_Clamp) {
-            cook::Vec2 v{ 85.f, -20.f };
-            Assert::IsTrue(v.clamp(-50.f, 50.f) == cook::Vec2{ 50.f, -20.f });
-        }
-
         TEST_METHOD(Vec2_Arithmetic) {
             cook::Vec2 v{ 0.f, -2.f };
             cook::Vec2 u{ 1.f, 4.f };
@@ -52,11 +47,6 @@ namespace Testing {
             cook::Vec3 v{ 2.f, 1.f, 4.f };
             cook::Vec3 u{ -1.f, 0.f, 0.f };
             Assert::IsTrue(v.cross(u) == cook::Vec3{ 0.f, -4.f, 1.f });
-        }
-
-        TEST_METHOD(Vec3_Clamp) {
-            cook::Vec3 v{ .85f, 1.2f, -.01f };
-            Assert::IsTrue(v.clamp(0.f, 1.f) == cook::Vec3{ .85f, 1.f, 0.f });
         }
 
         TEST_METHOD(Vec3_CloseEnough) {

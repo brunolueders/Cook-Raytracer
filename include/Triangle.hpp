@@ -22,6 +22,10 @@ namespace cook {
         Triangle(Vertex a_v0, Vertex a_v1, Vertex a_v2);
 
         bool intersect(const Ray& a_ray, IntersectionInfo* a_info) override;
+    
+        Vertex v0() const;
+        Vertex v1() const;
+        Vertex v2() const;
     };
 
 }

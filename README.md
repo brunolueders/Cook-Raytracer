@@ -11,3 +11,4 @@ Distribution raytracer based on [Robert L. Cook's seminal 1984 paper](http://gec
 
 ### Acknowledgements
 Uses [LodePNG](https://lodev.org/lodepng/) for image I/O.
+Uses [JSON for Modern C++](https://github.com/nlohmann/json) for JSON parsing.

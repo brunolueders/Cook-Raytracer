@@ -1,5 +1,4 @@
 #include "View.hpp"
-#include "Ray.hpp"
 #include "Util.hpp"
 #include "lodepng.h"
 #include <cassert>
@@ -63,11 +62,11 @@ namespace cook {
         using ubyte = unsigned char;
         std::vector<ubyte> data(4*m_size);
         for(std::size_t i = 0; i < m_size; ++i) {
-            m_pixels[i].clamp(0.f, 1.f);
+            m_pixels[i].clamp();
             m_pixels[i] *= 255.;
-            data[4*i]   = static_cast<ubyte>(m_pixels[i].x);
-            data[4*i+1] = static_cast<ubyte>(m_pixels[i].y);
-            data[4*i+2] = static_cast<ubyte>(m_pixels[i].z);
+            data[4*i]   = static_cast<ubyte>(m_pixels[i].r);
+            data[4*i+1] = static_cast<ubyte>(m_pixels[i].g);
+            data[4*i+2] = static_cast<ubyte>(m_pixels[i].b);
             data[4*i+3] = 255;
         }
 
