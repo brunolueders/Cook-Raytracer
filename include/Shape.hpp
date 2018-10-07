@@ -1,35 +1,31 @@
 /*******************************************************/
 /* COOK-STYLE RAYTRACER                                */
 /*                                                     */
-/* Renderables define the shape and material of some-  */
-/* thing that can be instantiated in a scene.          */
+/* Base class for shapes of objects.                   */
 /*                                                     */
 /* Copyright (c) 2018 Bruno Lüders                     */
 /* All project code licensed under the MIT license.    */
 /*******************************************************/
 #pragma once
 #include "Intersectable.hpp"
-#include "Material.hpp"
 
 namespace cook {
 
-    enum class RenderableType {
+    enum class ShapeType {
         Mesh,
         Sphere,
-        Rectangle
+        Rectangle,
+        Triangle
     };
 
-    class Renderable : public Intersectable {
+    class Shape : public Intersectable {
     private:
-        const RenderableType m_type;
-
-    protected:
-        Material* m_material;
+        const ShapeType m_type;
 
     public:
-        Renderable(RenderableType a_type, Material* a_material);
+        Shape(ShapeType a_type);
 
-        const Material& material() const;
+        ShapeType type() const;
     };
 
 }

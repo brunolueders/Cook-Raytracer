@@ -3,6 +3,7 @@
 namespace cook {
 
     Triangle::Triangle(Vertex a_v0, Vertex a_v1, Vertex a_v2) :
+        Shape{ ShapeType::Triangle },
         m_v0{ a_v0 },
         m_v1{ a_v1 },
         m_v2{ a_v2 },

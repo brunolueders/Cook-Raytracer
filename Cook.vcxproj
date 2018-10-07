@@ -122,7 +122,7 @@
     <ClInclude Include="include\Object.hpp" />
     <ClInclude Include="include\Ray.hpp" />
     <ClInclude Include="include\Rectangle.hpp" />
-    <ClInclude Include="include\Renderable.hpp" />
+    <ClInclude Include="include\Shape.hpp" />
     <ClInclude Include="include\ResourceMap.hpp" />
     <ClInclude Include="include\ResourceParsing.hpp" />
     <ClInclude Include="include\Sphere.hpp" />
@@ -147,7 +147,7 @@
     <ClCompile Include="src\Object.cpp" />
     <ClCompile Include="src\Ray.cpp" />
     <ClCompile Include="src\Rectangle.cpp" />
-    <ClCompile Include="src\Renderable.cpp" />
+    <ClCompile Include="src\Shape.cpp" />
     <ClCompile Include="src\ResourceMap.cpp" />
     <ClCompile Include="src\ResourceParsing.cpp" />
     <ClCompile Include="src\Sphere.cpp" />

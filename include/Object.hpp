@@ -7,25 +7,26 @@
 /* All project code licensed under the MIT license.    */
 /*******************************************************/
 #pragma once
-#include "Renderable.hpp"
+#include "Shape.hpp"
 #include "Transform.hpp"
+#include "Material.hpp"
 
 namespace cook {
 
-    /* Scene objects consist of a renderable and a transform.
-       The renderable defines the shape and material of
-       a kind of object, while the transform places an instance
-       of it in the scene. */
+    /* Scene objects combine a shape with a material
+       and a transform. */
     class Object : public Intersectable {
     protected:
-        Renderable* m_renderable;
-        Transform   m_transform;
+        Shape*    m_shape;
+        Material* m_material;
+        Transform m_transform;
 
     public:
-        Object(Renderable* a_renderable);
+        Object(Shape* a_shape, Material* a_material);
 
-        Renderable* renderable();
-        Transform&  transform();
+        Shape*     shape();
+        Material*  material();
+        Transform& transform();
 
         bool intersect(const Ray& a_ray, IntersectionInfo* a_info) override;
     };

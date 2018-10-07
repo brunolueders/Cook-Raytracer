@@ -18,7 +18,7 @@ namespace cook {
         std::unique_ptr<View> m_view;
 
         std::vector<std::unique_ptr<Material>>   m_materials;
-        std::vector<std::unique_ptr<Renderable>> m_renderables;
+        std::vector<std::unique_ptr<Shape>>      m_shapes;
         std::vector<std::unique_ptr<Object>>     m_objects;
         std::vector<std::unique_ptr<Light>>      m_lights;
 
@@ -61,44 +61,44 @@ namespace cook {
             m_materials.emplace_back(new Material{ Colour{ .4f, .2f, .6f }, Colour{.4f, .2f, .6f}, Colour{.4f, .2f, .6f}, Colour{}, 1000.f, 1.f, 1.f });
             m_materials.emplace_back(new Material{ Colour{ .3f, .6f, .8f }, Colour{.3f, .6f, .8f}, Colour{}, Colour{}, 1.f, 1.f, 1.f });
 
-            m_renderables.emplace_back(new Rectangle{ m_materials[0].get() });
-            m_objects.push_back(std::make_unique<Object>(m_renderables.back().get()));
+            m_shapes.emplace_back(new Rectangle{});
+            m_objects.push_back(std::make_unique<Object>(m_shapes.back().get(), m_materials[0].get()));
             m_objects.back()->transform().setScale(Vec3{ 50.f, 50.f, 50.f });
 
-            m_objects.push_back(std::make_unique<Object>(m_renderables.back().get()));
+            m_objects.push_back(std::make_unique<Object>(m_shapes.back().get(), m_materials[0].get()));
             m_objects.back()->transform().setPosition(Vec3{ 0.f, 50.f, 0.f });
             m_objects.back()->transform().setScale(Vec3{ 50.f, 50.f, 50.f });
             m_objects.back()->transform().setRotation(Vec3{ 180.f, 0.f, 0.f });
 
-            m_objects.push_back(std::make_unique<Object>(m_renderables.back().get()));
+            m_objects.push_back(std::make_unique<Object>(m_shapes.back().get(), m_materials[0].get()));
             m_objects.back()->transform().setPosition(Vec3{ 0.f, 25.f, -25.f });
             m_objects.back()->transform().setScale(Vec3{ 50.f, 50.f, 50.f });
             m_objects.back()->transform().setRotation(Vec3{ 90.f, 0.f, 0.f });
 
-            m_renderables.emplace_back(new Rectangle{ m_materials[1].get() });
-            m_objects.push_back(std::make_unique<Object>(m_renderables.back().get()));
+            m_shapes.emplace_back(new Rectangle{});
+            m_objects.push_back(std::make_unique<Object>(m_shapes.back().get(), m_materials[1].get()));
             m_objects.back()->transform().setPosition(Vec3{ 25.f, 25.f, 0.f });
             m_objects.back()->transform().setScale(Vec3{ 50.f, 50.f, 50.f });
             m_objects.back()->transform().setRotation(Vec3{ 0.f, 0.f, 90.f });
 
-            m_renderables.emplace_back(new Rectangle{ m_materials[2].get() });
-            m_objects.push_back(std::make_unique<Object>(m_renderables.back().get()));
+            m_shapes.emplace_back(new Rectangle{});
+            m_objects.push_back(std::make_unique<Object>(m_shapes.back().get(), m_materials[2].get()));
             m_objects.back()->transform().setPosition(Vec3{ -25.f, 25.f, 0.f });
             m_objects.back()->transform().setScale(Vec3{ 50.f, 50.f, 50.f });
             m_objects.back()->transform().setRotation(Vec3{ 0.f, 0.f, -90.f });
 
-            m_renderables.emplace_back(new Sphere{ m_materials[3].get() });
-            m_objects.push_back(std::make_unique<Object>(m_renderables.back().get()));
+            m_shapes.emplace_back(new Sphere{});
+            m_objects.push_back(std::make_unique<Object>(m_shapes.back().get(), m_materials[3].get()));
             m_objects.back()->transform().setPosition(Vec3{ 10.f, 10.f, -5.f });
             m_objects.back()->transform().setScale(Vec3{ 10.f, 10.f, 10.f });
 
-            m_renderables.emplace_back(new Sphere{ m_materials[4].get() });
-            m_objects.push_back(std::make_unique<Object>(m_renderables.back().get()));
+            m_shapes.emplace_back(new Sphere{});
+            m_objects.push_back(std::make_unique<Object>(m_shapes.back().get(), m_materials[4].get()));
             m_objects.back()->transform().setPosition(Vec3{ -10.f, 30.f, 0.f });
             m_objects.back()->transform().setScale(Vec3{ 8.f, 8.f, 8.f });
 
-            m_renderables.emplace_back(new Sphere{ m_materials[5].get() });
-            m_objects.push_back(std::make_unique<Object>(m_renderables.back().get()));
+            m_shapes.emplace_back(new Sphere{});
+            m_objects.push_back(std::make_unique<Object>(m_shapes.back().get(), m_materials[5].get()));
             m_objects.back()->transform().setPosition(Vec3{ -5.f, 6.f, 5.f });
             m_objects.back()->transform().setScale(Vec3{ 6.f, 6.f, 6.f });
 
@@ -141,11 +141,11 @@ namespace cook {
             auto colour = m_settings.backgroundColour;
             IntersectionInfo info;
             if(closestIntersection(a_ray, &info)) {
-                const auto& mat = m_objects[info.index]->renderable()->material();
+                const auto mat = m_objects[info.index]->material();
                 auto eps = 1e-3f;
 
                 // Shadow rays
-                colour = m_settings.ambientLightColour*mat.ambient();
+                colour = m_settings.ambientLightColour*mat->ambient();
                 for(const auto& light: m_lights) {
                     // Construct shadow ray to random point on light source
                     auto samplePoint = light->sample(info.point, info.normal, a_ray.prototype());
@@ -154,24 +154,24 @@ namespace cook {
                         // Phong shading
                         auto intensity = shadowRay.direction().dot(info.normal);
                         if(intensity > 0.f) {
-                            colour += intensity*light->colour()*mat.diffuse();
+                            colour += intensity*light->colour()*mat->diffuse();
                         }
                     }
                 }
 
                 // Reflection
-                if(mat.isReflective()) {
-                    auto reflDir = mat.sampleReflectionFunction(a_ray, info.normal);
+                if(mat->isReflective()) {
+                    auto reflDir = mat->sampleReflectionFunction(a_ray, info.normal);
                     Ray reflRay{ info.point + reflDir*eps, reflDir, a_ray.length(), a_ray.prototype() };
-                    colour += trace(reflRay, a_depth + 1)*mat.specular();
+                    colour += trace(reflRay, a_depth + 1)*mat->specular();
                 }
 
                 // Refraction
-                if(mat.isTransparent()) {
-                    auto refrDir = mat.sampleRefractionFunction(a_ray, info.normal);
+                if(mat->isTransparent()) {
+                    auto refrDir = mat->sampleRefractionFunction(a_ray, info.normal);
                     if(refrDir != Vec3::zero) {
                         Ray refrRay{ info.point + refrDir*eps, refrDir, a_ray.length(), a_ray.prototype() };
-                        colour += trace(refrRay, a_depth + 1)*mat.transmissive();
+                        colour += trace(refrRay, a_depth + 1)*mat->transmissive();
                     }
                 }
             }

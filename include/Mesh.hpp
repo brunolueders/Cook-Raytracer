@@ -8,19 +8,19 @@
 /*******************************************************/
 #pragma once
 #include <vector>
-#include "Renderable.hpp"
+#include "Shape.hpp"
 #include "Triangle.hpp"
 
 namespace cook {
 
     using TriangleList = std::vector<Triangle>;
 
-    class Mesh : public Renderable {
+    class Mesh : public Shape {
     protected:
         TriangleList m_triangles;
 
     public:
-        Mesh(Material* a_material, TriangleList a_triangles);
+        Mesh(TriangleList a_triangles);
 
         bool intersect(const Ray& a_ray, IntersectionInfo* a_info) override;
     };

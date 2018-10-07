@@ -2,8 +2,8 @@
 
 namespace cook {
 
-    Mesh::Mesh(Material* a_material, TriangleList a_triangles) :
-        Renderable{ RenderableType::Mesh, a_material },
+    Mesh::Mesh(TriangleList a_triangles) :
+        Shape{ ShapeType::Mesh },
         m_triangles{ a_triangles }
     {}
 

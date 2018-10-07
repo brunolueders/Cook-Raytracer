@@ -10,7 +10,7 @@ namespace Testing {
     TEST_CLASS(Intersections) {
     public:
         TEST_METHOD(Rectangle_Intersect) {
-            cook::Rectangle rect{ nullptr };
+            cook::Rectangle rect{};
             cook::Vec3 from{ 1.f, 1.f, 1.f };
             cook::IntersectionInfo info;
             Assert::IsTrue(rect.intersect(cook::Ray{ from, cook::Vec3{ -1.f, -1.f, -.5f }, 0 }, &info));
@@ -21,7 +21,7 @@ namespace Testing {
         }
 
         TEST_METHOD(Sphere_Intersect) {
-            cook::Sphere sphere{ nullptr };
+            cook::Sphere sphere{};
             cook::Vec3 from{ 1.f, 1.f, 1.f };
             cook::IntersectionInfo info;
             Assert::IsTrue(sphere.intersect(cook::Ray{ from, cook::Vec3{ -1.f, -1.f, -.5f }, 0 }, &info));

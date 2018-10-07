@@ -103,7 +103,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>$(VCInstallDir)UnitTest\lib;../$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Vec2.obj;Vec3.obj;Colour.obj;Mat44.obj;Transform.obj;Ray.obj;Renderable.obj;Rectangle.obj;Sphere.obj;Triangle.obj;Vertex.obj;Material.obj;Util.obj;ResourceParsing.obj;ResourceMap.obj;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Vec2.obj;Vec3.obj;Colour.obj;Mat44.obj;Transform.obj;Ray.obj;Shape.obj;Rectangle.obj;Sphere.obj;Triangle.obj;Vertex.obj;Material.obj;Util.obj;ResourceParsing.obj;ResourceMap.obj;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -118,7 +118,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <AdditionalLibraryDirectories>$(VCInstallDir)UnitTest\lib;../$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Vec2.obj;Vec3.obj;Colour.obj;Mat44.obj;Transform.obj;Ray.obj;Renderable.obj;Rectangle.obj;Sphere.obj;Triangle.obj;Vertex.obj;Material.obj;Util.obj;ResourceParsing.obj;ResourceMap.obj;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Vec2.obj;Vec3.obj;Colour.obj;Mat44.obj;Transform.obj;Ray.obj;Shape.obj;Rectangle.obj;Sphere.obj;Triangle.obj;Vertex.obj;Material.obj;Util.obj;ResourceParsing.obj;ResourceMap.obj;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
