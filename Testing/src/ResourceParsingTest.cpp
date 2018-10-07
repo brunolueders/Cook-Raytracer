@@ -92,6 +92,49 @@ namespace Testing {
             Assert::IsTrue(t.v2().position == cook::Vec3{ 1.f, -1.f, 1.f });
         }
 
+        TEST_METHOD(parse_Mesh) {
+            nlohmann::json j = R"({
+                "faces": [
+                    {
+                        "v0": {
+                            "position": [ -1, 1, 1 ],
+                            "texCoords": [ 0, 0 ],
+                            "normal": [ 1, 0, 0 ]
+                        },
+                        "v1": {
+                            "position": [ 1, 1, -1 ],
+                            "texCoords": [ 0, 1 ],
+                            "normal": [ 0, 1, 0 ]
+                        },
+                        "v2": {
+                            "position": [ 1, -1, 1 ],
+                            "texCoords": [ 1, 0 ],
+                            "normal": [ 0, 0, 1 ]
+                        }
+                    },
+                    {
+                        "v0": {
+                            "position": [ -1, 1, 1 ],
+                            "texCoords": [ 0, 0 ],
+                            "normal": [ 1, 0, 0 ]
+                        },
+                        "v1": {
+                            "position": [ 1, 1, -1 ],
+                            "texCoords": [ 0, 1 ],
+                            "normal": [ 0, 1, 0 ]
+                        },
+                        "v2": {
+                            "position": [ 1, -1, 1 ],
+                            "texCoords": [ 1, 0 ],
+                            "normal": [ 0, 0, 1 ]
+                        }
+                    }
+                ]
+            })"_json;
+            auto m = cook::ResourceParsing::parse<cook::Mesh>(j);
+            Assert::IsTrue(m.triangles().size() == 2);
+        }
+
         TEST_METHOD(MaterialMap_addResources_Multiple) {
             std::istringstream input(std::string(R"([
                 {

@@ -66,5 +66,14 @@ namespace cook {
             return Triangle{ v0, v1, v2 };
         }
 
+        template<>
+        Mesh parse(nlohmann::json& a_json) {
+            TriangleList tris{};
+            for(auto& tri: a_json.at("faces")) {
+                tris.push_back(parse<Triangle>(tri));
+            }
+            return Mesh{ tris };
+        }
+
     }
 }

@@ -10,6 +10,7 @@
 #include <map>
 #include "ResourceParsing.hpp"
 #include "Material.hpp"
+#include "Mesh.hpp"
 
 namespace cook {
 
@@ -27,5 +28,6 @@ namespace cook {
     };
 
     using MaterialMap = ResourceMap<Material>;
+    using MeshMap = ResourceMap<Mesh>;
 
 }

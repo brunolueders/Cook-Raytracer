@@ -22,6 +22,8 @@ namespace cook {
     public:
         Mesh(TriangleList a_triangles);
 
+        const TriangleList& triangles() const;
+
         bool intersect(const Ray& a_ray, IntersectionInfo* a_info) override;
     };
 
