@@ -8,6 +8,7 @@ Distribution raytracer based on [Robert L. Cook's seminal 1984 paper](http://gec
 * Translucency
 * Depth of field
 * Multithreaded rendering
+* Triangle mesh support
 
 ### Acknowledgements
 Uses [LodePNG](https://lodev.org/lodepng/) for image I/O.  
