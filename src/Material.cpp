@@ -100,11 +100,6 @@ namespace cook {
     {
         if(m_reflective) {
             m_reflectanceFunction = _hemisphereSampling::_createLookupTable(m_shininess);
-            std::cout << m_shininess << "\n";
-            for(auto x: m_reflectanceFunction) {
-                std::cout << x << ", ";
-            }
-            std::cout << std::endl;
         }
 
         if(m_transparent) {
@@ -130,6 +125,10 @@ namespace cook {
 
     float Material::shininess() const {
         return m_shininess;
+    }
+
+    float Material::translucency() const {
+        return m_translucency;
     }
 
     float Material::refractiveIndex() const {

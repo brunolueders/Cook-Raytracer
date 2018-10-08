@@ -1,30 +1,19 @@
 /*******************************************************/
 /* COOK-STYLE RAYTRACER                                */
 /*                                                     */
-/* Triangle meshes                                     */
+/* Parsing of JSON resources (Meshes, Materials, ...)  */
 /*                                                     */
 /* Copyright (c) 2018 Bruno Lüders                     */
 /* All project code licensed under the MIT license.    */
 /*******************************************************/
 #pragma once
-#include <vector>
-#include "Shape.hpp"
-#include "Triangle.hpp"
+#include "json.hpp"
 
 namespace cook {
+    namespace ResourceParsing {
 
-    using TriangleList = std::vector<Triangle>;
+        template<typename ResType>
+        ResType parse(nlohmann::json& a_json);
 
-    class Mesh : public Shape {
-    protected:
-        TriangleList m_triangles;
-
-    public:
-        Mesh(TriangleList a_triangles);
-
-        const TriangleList& triangles() const;
-
-        bool intersect(const Ray& a_ray, IntersectionInfo* a_info) override;
-    };
-
+    }
 }

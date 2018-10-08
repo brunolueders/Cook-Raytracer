@@ -9,6 +9,7 @@
 #pragma once
 #include <array>
 #include "Ray.hpp"
+#include "Colour.hpp"
 
 namespace cook {
 
@@ -33,6 +34,7 @@ namespace cook {
         Colour specular() const;
         Colour transmissive() const;
         float  shininess() const;
+        float  translucency() const;
         float  refractiveIndex() const;
         
         // Takes an incident ray and the intersecion normal and returns

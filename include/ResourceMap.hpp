@@ -1,35 +1,33 @@
 /*******************************************************/
 /* COOK-STYLE RAYTRACER                                */
 /*                                                     */
-/* Renderables define the shape and material of some-  */
-/* thing that can be instantiated in a scene.          */
+/* Data structure for managing named resources         */
 /*                                                     */
 /* Copyright (c) 2018 Bruno Lüders                     */
 /* All project code licensed under the MIT license.    */
 /*******************************************************/
 #pragma once
-#include "Intersectable.hpp"
+#include <map>
+#include "ResourceParsing.hpp"
 #include "Material.hpp"
+#include "Mesh.hpp"
 
 namespace cook {
 
-    enum class RenderableType {
-        Mesh,
-        Sphere,
-        Rectangle
-    };
-
-    class Renderable : public Intersectable {
-    private:
-        const RenderableType m_type;
-
+    template<typename ResourceType>
+    class ResourceMap {
     protected:
-        Material* m_material;
+        std::map<std::string, ResourceType> m_resources;
 
     public:
-        Renderable(RenderableType a_type, Material* a_material);
+        ResourceMap() {}
 
-        const Material& material() const;
+        void addResources(std::istream& a_stream);
+
+        ResourceType* get(std::string a_name);
     };
+
+    using MaterialMap = ResourceMap<Material>;
+    using MeshMap = ResourceMap<Mesh>;
 
 }

@@ -94,7 +94,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>$(VCInstallDir)UnitTest\include;$(ProjectDir)include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(VCInstallDir)UnitTest\include;$(ProjectDir)include;$(ProjectDir)/../nlohmann;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <UseFullPaths>true</UseFullPaths>
     </ClCompile>
@@ -103,7 +103,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>$(VCInstallDir)UnitTest\lib;../$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Vec2.obj;Vec3.obj;Mat44.obj;Transform.obj;Ray.obj;Renderable.obj;Rectangle.obj;Sphere.obj;Triangle.obj;Vertex.obj;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Vec2.obj;Vec3.obj;Colour.obj;Mat44.obj;Transform.obj;Ray.obj;Shape.obj;Rectangle.obj;Sphere.obj;Triangle.obj;Vertex.obj;Material.obj;Util.obj;ResourceParsing.obj;ResourceMap.obj;Mesh.obj;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -111,14 +111,14 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(VCInstallDir)UnitTest\include;$(ProjectDir)include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(VCInstallDir)UnitTest\include;$(ProjectDir)include;$(ProjectDir)/../nlohmann;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <UseFullPaths>true</UseFullPaths>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <AdditionalLibraryDirectories>$(VCInstallDir)UnitTest\lib;../$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Vec2.obj;Vec3.obj;Mat44.obj;Transform.obj;Ray.obj;Renderable.obj;Rectangle.obj;Sphere.obj;Triangle.obj;Vertex.obj;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Vec2.obj;Vec3.obj;Colour.obj;Mat44.obj;Transform.obj;Ray.obj;Shape.obj;Rectangle.obj;Sphere.obj;Triangle.obj;Vertex.obj;Material.obj;Util.obj;ResourceParsing.obj;ResourceMap.obj;Mesh.obj;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -155,6 +155,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\IntersectionTest.cpp" />
+    <ClCompile Include="src\ResourceParsingTest.cpp" />
     <ClCompile Include="src\stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>

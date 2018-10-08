@@ -26,7 +26,6 @@ namespace cook {
         float dot(const Vec2& a_b) const;
 
         Vec2& normalize();
-        Vec2& clamp(const float a_min, const float a_max);
 
         Vec2& operator+=(const Vec2& a_b);
         Vec2& operator-=(const Vec2& a_b);

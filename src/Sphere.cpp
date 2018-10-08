@@ -2,8 +2,8 @@
 
 namespace cook {
 
-    Sphere::Sphere(Material* a_material) :
-        Renderable{ RenderableType::Sphere, a_material }
+    Sphere::Sphere() :
+        Shape{ ShapeType::Sphere }
     {}
 
     bool Sphere::intersect(const Ray& a_ray, IntersectionInfo* a_info) {

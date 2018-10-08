@@ -1,30 +1,31 @@
 /*******************************************************/
 /* COOK-STYLE RAYTRACER                                */
 /*                                                     */
-/* Triangle meshes                                     */
+/* Base class for shapes of objects.                   */
 /*                                                     */
 /* Copyright (c) 2018 Bruno Lüders                     */
 /* All project code licensed under the MIT license.    */
 /*******************************************************/
 #pragma once
-#include <vector>
-#include "Shape.hpp"
-#include "Triangle.hpp"
+#include "Intersectable.hpp"
 
 namespace cook {
 
-    using TriangleList = std::vector<Triangle>;
+    enum class ShapeType {
+        Mesh,
+        Sphere,
+        Rectangle,
+        Triangle
+    };
 
-    class Mesh : public Shape {
-    protected:
-        TriangleList m_triangles;
+    class Shape : public Intersectable {
+    private:
+        const ShapeType m_type;
 
     public:
-        Mesh(TriangleList a_triangles);
+        Shape(ShapeType a_type);
 
-        const TriangleList& triangles() const;
-
-        bool intersect(const Ray& a_ray, IntersectionInfo* a_info) override;
+        ShapeType type() const;
     };
 
 }

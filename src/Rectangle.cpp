@@ -3,8 +3,8 @@
 
 namespace cook {
 
-    Rectangle::Rectangle(Material* a_material) :
-        Renderable{ RenderableType::Rectangle, a_material }
+    Rectangle::Rectangle() :
+        Shape{ ShapeType::Rectangle }
     {}
 
     bool Rectangle::intersect(const Ray& a_ray, IntersectionInfo * a_info) {

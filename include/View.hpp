@@ -7,12 +7,11 @@
 /* All project code licensed under the MIT license.    */
 /*******************************************************/
 #pragma once
-#include "Vec3.hpp"
+#include "Ray.hpp"
+#include "Colour.hpp"
 #include <vector>
 
 namespace cook {
-
-    class Ray;
 
     /* Combines scene camera and render target in a single class. */
     class View {

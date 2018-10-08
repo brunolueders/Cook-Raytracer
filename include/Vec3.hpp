@@ -27,7 +27,6 @@ namespace cook {
         Vec3  cross(const Vec3& a_b) const;
 
         Vec3& normalize();
-        Vec3& clamp(const float a_min, const float a_max);
         
         bool closeEnough(const Vec3& a_b, float a_tol);
 
@@ -52,5 +51,4 @@ namespace cook {
 
     Vec3 operator*(const float a_s, const Vec3& a_v);
 
-    using Colour = Vec3;
 }
