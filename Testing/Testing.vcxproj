@@ -94,7 +94,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>$(VCInstallDir)UnitTest\include;$(ProjectDir)include;$(ProjectDir)/../nlohmann;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(VCInstallDir)UnitTest\include;$(ProjectDir)include;$(SolutionDir)Raytracer\include;$(SolutionDir)Raytracer\dependencies\lodepng;$(SolutionDir)Raytracer\dependencies\nlohmann;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <UseFullPaths>true</UseFullPaths>
     </ClCompile>
@@ -102,8 +102,8 @@
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>$(VCInstallDir)UnitTest\lib;../$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Vec2.obj;Vec3.obj;Colour.obj;Mat44.obj;Transform.obj;Ray.obj;Shape.obj;Rectangle.obj;Sphere.obj;Triangle.obj;Vertex.obj;Material.obj;Util.obj;ResourceParsing.obj;ResourceMap.obj;Mesh.obj;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(VCInstallDir)UnitTest\lib;$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>Raytracer.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -111,14 +111,14 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(VCInstallDir)UnitTest\include;$(ProjectDir)include;$(ProjectDir)/../nlohmann;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(VCInstallDir)UnitTest\include;$(ProjectDir)include;$(SolutionDir)Raytracer\include;$(SolutionDir)Raytracer\dependencies\lodepng;$(SolutionDir)Raytracer\dependencies\nlohmann;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <UseFullPaths>true</UseFullPaths>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
-      <AdditionalLibraryDirectories>$(VCInstallDir)UnitTest\lib;../$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Vec2.obj;Vec3.obj;Colour.obj;Mat44.obj;Transform.obj;Ray.obj;Shape.obj;Rectangle.obj;Sphere.obj;Triangle.obj;Vertex.obj;Material.obj;Util.obj;ResourceParsing.obj;ResourceMap.obj;Mesh.obj;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(VCInstallDir)UnitTest\lib;$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>Raytracer.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -164,13 +164,13 @@
     <ClCompile Include="src\VectorMathsTest.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Cook.vcxproj">
-      <Project>{c0abadea-5a4a-43a4-90e7-ff878768842c}</Project>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="include\stdafx.h" />
     <ClInclude Include="include\targetver.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Raytracer\Raytracer.vcxproj">
+      <Project>{c0abadea-5a4a-43a4-90e7-ff878768842c}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

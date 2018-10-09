@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "CppUnitTest.h"
-#include "../../include/Transform.hpp"
+#include "Transform.hpp"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 

@@ -23,7 +23,7 @@ namespace cook {
         std::vector<std::unique_ptr<Light>>      m_lights;
 
         struct {
-            const std::string outputFilename = "box13.png";
+            const std::string outputFilename = "box15.png";
 
             const size_t vpWidth{ 400 };
             const size_t vpHeight{ 300 };

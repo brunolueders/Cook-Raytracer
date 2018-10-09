@@ -1,8 +1,8 @@
 #include "stdafx.h"
 #include "CppUnitTest.h"
-#include "../../include/Rectangle.hpp"
-#include "../../include/Sphere.hpp"
-#include "../../include/Triangle.hpp"
+#include "Rectangle.hpp"
+#include "Sphere.hpp"
+#include "Triangle.hpp"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
