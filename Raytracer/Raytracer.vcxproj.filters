@@ -13,10 +13,13 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="lodepng">
+    <Filter Include="dependencies">
+      <UniqueIdentifier>{0169d990-1959-4704-b2af-9d6ff357fe8d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="dependencies\lodepng">
       <UniqueIdentifier>{0d9890b3-bf0a-4300-bfe6-6e5413dcd6cd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="nlohmann">
+    <Filter Include="dependencies\nlohmann">
       <UniqueIdentifier>{34055a05-b46b-46e6-ae5d-53bca1dcb6e8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -51,9 +54,6 @@
     <ClInclude Include="include\View.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="lodepng\lodepng.h">
-      <Filter>lodepng</Filter>
-    </ClInclude>
     <ClInclude Include="include\Util.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -72,9 +72,6 @@
     <ClInclude Include="include\Vec2.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="nlohmann\json.hpp">
-      <Filter>nlohmann</Filter>
-    </ClInclude>
     <ClInclude Include="include\ResourceMap.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -87,15 +84,15 @@
     <ClInclude Include="include\Shape.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="dependencies\lodepng\lodepng.h">
+      <Filter>dependencies\lodepng</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\nlohmann\json.hpp">
+      <Filter>dependencies\nlohmann</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="lodepng\lodepng.cpp">
-      <Filter>lodepng</Filter>
-    </ClCompile>
     <ClCompile Include="src\Light.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Mat44.cpp">
@@ -151,6 +148,9 @@
     </ClCompile>
     <ClCompile Include="src\Shape.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="dependencies\lodepng\lodepng.cpp">
+      <Filter>dependencies\lodepng</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -1,8 +1,8 @@
 #include "stdafx.h"
 #include "CppUnitTest.h"
-#include "../../include/Triangle.hpp"
-#include "../../include/ResourceParsing.hpp"
-#include "../../include/ResourceMap.hpp"
+#include "Triangle.hpp"
+#include "ResourceParsing.hpp"
+#include "ResourceMap.hpp"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 

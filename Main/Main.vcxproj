@@ -18,10 +18,18 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Raytracer\Raytracer.vcxproj">
+      <Project>{c0abadea-5a4a-43a4-90e7-ff878768842c}</Project>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{C0ABADEA-5A4A-43A4-90E7-FF878768842C}</ProjectGuid>
-    <RootNamespace>Cook</RootNamespace>
+    <ProjectGuid>{B15303D2-F168-43BD-A38C-486813AE427E}</ProjectGuid>
+    <RootNamespace>Main</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -75,8 +83,12 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(ProjectDir)include;$(ProjectDir)lodepng;$(ProjectDir)nlohmann</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Raytracer\include;$(SolutionDir)Raytracer\dependencies\lodepng;$(SolutionDir)Raytracer\dependencies\nlohmann</AdditionalIncludeDirectories>
     </ClCompile>
+    <Link>
+      <AdditionalDependencies>Raytracer.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(OutDir)</AdditionalLibraryDirectories>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -92,11 +104,13 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(ProjectDir)include;$(ProjectDir)lodepng;$(ProjectDir)nlohmann</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Raytracer\include;$(SolutionDir)Raytracer\dependencies\lodepng;$(SolutionDir)Raytracer\dependencies\nlohmann</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>Raytracer.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(OutDir)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -112,53 +126,6 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClInclude Include="include\Colour.hpp" />
-    <ClInclude Include="include\Intersectable.hpp" />
-    <ClInclude Include="include\Light.hpp" />
-    <ClInclude Include="include\Mat44.hpp" />
-    <ClInclude Include="include\Material.hpp" />
-    <ClInclude Include="include\Mesh.hpp" />
-    <ClInclude Include="include\Object.hpp" />
-    <ClInclude Include="include\Ray.hpp" />
-    <ClInclude Include="include\Rectangle.hpp" />
-    <ClInclude Include="include\Shape.hpp" />
-    <ClInclude Include="include\ResourceMap.hpp" />
-    <ClInclude Include="include\ResourceParsing.hpp" />
-    <ClInclude Include="include\Sphere.hpp" />
-    <ClInclude Include="include\Transform.hpp" />
-    <ClInclude Include="include\Triangle.hpp" />
-    <ClInclude Include="include\Util.hpp" />
-    <ClInclude Include="include\Vec2.hpp" />
-    <ClInclude Include="include\Vec3.hpp" />
-    <ClInclude Include="include\Vertex.hpp" />
-    <ClInclude Include="include\View.hpp" />
-    <ClInclude Include="lodepng\lodepng.h" />
-    <ClInclude Include="nlohmann\json.hpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="lodepng\lodepng.cpp" />
-    <ClCompile Include="src\Colour.cpp" />
-    <ClCompile Include="src\Light.cpp" />
-    <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\Mat44.cpp" />
-    <ClCompile Include="src\Material.cpp" />
-    <ClCompile Include="src\Mesh.cpp" />
-    <ClCompile Include="src\Object.cpp" />
-    <ClCompile Include="src\Ray.cpp" />
-    <ClCompile Include="src\Rectangle.cpp" />
-    <ClCompile Include="src\Shape.cpp" />
-    <ClCompile Include="src\ResourceMap.cpp" />
-    <ClCompile Include="src\ResourceParsing.cpp" />
-    <ClCompile Include="src\Sphere.cpp" />
-    <ClCompile Include="src\Transform.cpp" />
-    <ClCompile Include="src\Triangle.cpp" />
-    <ClCompile Include="src\Util.cpp" />
-    <ClCompile Include="src\Vec2.cpp" />
-    <ClCompile Include="src\Vec3.cpp" />
-    <ClCompile Include="src\Vertex.cpp" />
-    <ClCompile Include="src\View.cpp" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

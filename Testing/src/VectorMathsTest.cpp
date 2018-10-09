@@ -1,8 +1,8 @@
 #include "stdafx.h"
 #include "CppUnitTest.h"
-#include "../../include/Vec2.hpp"
-#include "../../include/Vec3.hpp"
-#include "../../include/Mat44.hpp"
+#include "Vec2.hpp"
+#include "Vec3.hpp"
+#include "Mat44.hpp"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
