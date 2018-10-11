@@ -29,6 +29,7 @@ namespace cook {
             // Transform intersection info back to world space
             a_info->point = m_transform.pointToWorld(a_info->point);
             a_info->normal = m_transform.normalToWorld(a_info->normal);
+            a_info->material = m_material;
             return true;
         }
         return false;

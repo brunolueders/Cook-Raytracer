@@ -19,4 +19,14 @@ namespace cook {
     extern float lerp(float a_ratio, float a_from, float a_to);
     extern float urand();
     extern float stratifiedSample(size_t a_index);
+
+    template<typename T>
+    T* toPointer(T& a_ref) {
+        return &a_ref;
+    }
+
+    template<typename T>
+    T* toPointer(T* a_ptr) {
+        return a_ptr;
+    }
 }

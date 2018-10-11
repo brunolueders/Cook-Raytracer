@@ -51,34 +51,40 @@ namespace cook {
         return m_matrix.transpose().transformDirection(a_v).normalize();
     }
 
-    void Transform::translate(const Vec3 a_v) {
+    Transform& Transform::translate(const Vec3 a_v) {
         m_position += a_v;
         m_matrixUpdated = false;
+        return *this;
     }
 
-    void Transform::rotate(const Vec3 a_v) {
+    Transform& Transform::rotate(const Vec3 a_v) {
         m_rotation += a_v*PI180;
         m_matrixUpdated = false;
+        return *this;
     }
 
-    void Transform::scale(const Vec3 a_v) {
+    Transform& Transform::scale(const Vec3 a_v) {
         m_scale += a_v;
         m_matrixUpdated = false;
+        return *this;
     }
 
-    void Transform::setPosition(const Vec3 a_v) {
+    Transform& Transform::setPosition(const Vec3 a_v) {
         m_position = a_v;
         m_matrixUpdated = false;
+        return *this;
     }
 
-    void Transform::setRotation(const Vec3 a_v) {
+    Transform& Transform::setRotation(const Vec3 a_v) {
         m_rotation = a_v*PI180;
         m_matrixUpdated = false;
+        return *this;
     }
 
-    void Transform::setScale(const Vec3 a_v) {
+    Transform& Transform::setScale(const Vec3 a_v) {
         m_scale = a_v;
         m_matrixUpdated = false;
+        return *this;
     }
 
     Vec3 Transform::position() const {

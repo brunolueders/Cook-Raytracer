@@ -3,6 +3,8 @@
 
 namespace cook {
 
+    Rectangle Rectangle::unit{};
+
     Rectangle::Rectangle() :
         Shape{ ShapeType::Rectangle }
     {}

@@ -2,6 +2,8 @@
 
 namespace cook {
 
+    Sphere Sphere::unit{};
+
     Sphere::Sphere() :
         Shape{ ShapeType::Sphere }
     {}

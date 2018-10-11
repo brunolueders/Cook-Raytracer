@@ -90,6 +90,9 @@
     <ClInclude Include="dependencies\nlohmann\json.hpp">
       <Filter>dependencies\nlohmann</Filter>
     </ClInclude>
+    <ClInclude Include="include\Scene.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Light.cpp">
@@ -151,6 +154,9 @@
     </ClCompile>
     <ClCompile Include="dependencies\lodepng\lodepng.cpp">
       <Filter>dependencies\lodepng</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Scene.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
