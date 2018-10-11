@@ -1,0 +1,62 @@
+[
+  {
+    "name": "whiteWall",
+    "ambient": "#e5e5e5",
+    "diffuse": "#e5e5e5",
+    "specular": "#000000",
+    "transmissive": "#000000",
+    "shininess": 1,
+    "translucency": 1,
+    "refractiveIndex": 1
+  },
+  {
+    "name": "redWall",
+    "ambient": "#ff6666",
+    "diffuse": "#ff6666",
+    "specular": "#000000",
+    "transmissive": "#000000",
+    "shininess": 1,
+    "translucency": 1,
+    "refractiveIndex": 1
+  },
+  {
+    "name": "blueWall",
+    "ambient": "#6666ff",
+    "diffuse": "#6666ff",
+    "specular": "#000000",
+    "transmissive": "#000000",
+    "shininess": 1,
+    "translucency": 1,
+    "refractiveIndex": 1
+  },
+  {
+    "name": "frostedGlass",
+    "ambient": "#000000",
+    "diffuse": "#000000",
+    "specular": "#333333",
+    "transmissive": "#ffffff",
+    "shininess": 10,
+    "translucency": 10,
+    "refractiveIndex": 1.05
+  },
+  {
+    "name": "purpleMirror",
+    "ambient": "#663399",
+    "diffuse": "#663399",
+    "specular": "#663399",
+    "transmissive": "#000000",
+    "shininess": 1000,
+    "translucency": 1,
+    "refractiveIndex": 1
+  },
+  {
+    "name": "blueDiffuse",
+    "ambient": "#4c99cc",
+    "diffuse": "#4c99cc",
+    "specular": "#000000",
+    "transmissive": "#000000",
+    "shininess": 1,
+    "translucency": 1,
+    "refractiveIndex": 1
+  }
+]

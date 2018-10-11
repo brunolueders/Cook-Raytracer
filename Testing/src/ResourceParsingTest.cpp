@@ -1,8 +1,6 @@
 #include "stdafx.h"
 #include "CppUnitTest.h"
-#include "Triangle.hpp"
-#include "ResourceParsing.hpp"
-#include "ResourceMap.hpp"
+#include "Scene.hpp"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -14,8 +12,12 @@ namespace Testing {
             auto col = cook::ResourceParsing::parse<cook::Colour>(j);
             Assert::IsTrue(col.closeEnough(cook::Colour{ .192f, 1.f, .031f }, 1e-3f));
         
+            j = R"([1.25, 0.5, 0])"_json;
+            col = cook::ResourceParsing::parse<cook::Colour>(j);
+            Assert::IsTrue(col == cook::Colour{ 1.25f, .5f, 0.f });
+
             try {
-                nlohmann::json j = R"("445566")"_json;
+                j = R"("445566")"_json;
                 cook::ResourceParsing::parse<cook::Colour>(j);
             }
             catch(nlohmann::detail::parse_error&) {
@@ -34,6 +36,19 @@ namespace Testing {
             nlohmann::json j = R"([1.25, -4.0, 2])"_json;
             auto v = cook::ResourceParsing::parse<cook::Vec3>(j);
             Assert::IsTrue(v == cook::Vec3{ 1.25f, -4.f, 2.f });
+        }
+        
+        TEST_METHOD(parse_Transform) {
+            nlohmann::json j = R"({
+                "position": [10, 10, 10],
+                "rotation": [25, -45, 0],
+                "scale": [20, 0, 50]
+            })"_json;
+            auto t = cook::ResourceParsing::parse<cook::Transform>(j);
+            auto radians = cook::PI180*cook::Vec3{ 25.f, -45.f, 0.f };
+            Assert::IsTrue(t.position() == cook::Vec3{ 10.f, 10.f, 10.f });
+            Assert::IsTrue(t.rotation().closeEnough(radians, 1e-4f));
+            Assert::IsTrue(t.scale() == cook::Vec3{ 20.f, 0.f, 50.f });
         }
 
         TEST_METHOD(parse_Material) {
@@ -135,8 +150,20 @@ namespace Testing {
             Assert::IsTrue(m.triangles().size() == 2);
         }
 
+        TEST_METHOD(parse_Light) {
+            nlohmann::json j = R"({
+                "position": [10, 5, -4],
+                "colour": [1.25, 1.25, 1.25],
+                "radius": 5
+            })"_json;
+            auto l = cook::ResourceParsing::parse<cook::Light>(j);
+            Assert::IsTrue(l.position() == cook::Vec3{ 10.f, 5.f, -4.f });
+            Assert::IsTrue(l.colour() == cook::Colour{ 1.25f, 1.25f, 1.25f });
+            Assert::IsTrue(l.radius() == 5.f);
+        }
+
         TEST_METHOD(MaterialMap_addResources_Multiple) {
-            std::istringstream input(std::string(R"([
+            nlohmann::json j = R"([
                 {
                     "name":"shiny",
                     "ambient":"#a5a5a5",
@@ -167,16 +194,16 @@ namespace Testing {
                     "translucency":100.0,
                     "refractiveIndex":1.25
                 }
-            ])"));
+            ])"_json;
             cook::MaterialMap map{};
-            map.addResources(input);
+            map.addResources(j);
             Assert::IsTrue(map.get("shiny") != nullptr);
             Assert::IsTrue(map.get("wood") != nullptr);
             Assert::IsTrue(map.get("copper") != nullptr);
         }
 
         TEST_METHOD(MaterialMap_addResources_Single) {
-            std::istringstream input(std::string(R"({
+            nlohmann::json j = R"({
                 "name":"shiny",
                 "ambient":"#a5a5a5",
                 "diffuse":"#14dd30",
@@ -185,10 +212,47 @@ namespace Testing {
                 "shininess":100.0,
                 "translucency":100.0,
                 "refractiveIndex":1.25
-            })"));
+            })"_json;
             cook::MaterialMap map{};
-            map.addResources(input);
+            map.addResources(j);
             Assert::IsTrue(map.get("shiny") != nullptr);
+        }
+
+        TEST_METHOD(Scene_loadFromStream) {
+            std::istringstream input(std::string(R"({
+                "resources": [{
+                    "type": "material",
+                    "data": {
+                        "name":"shiny",
+                        "ambient":"#a5a5a5",
+                        "diffuse":"#14dd30",
+                        "specular":"#6f9a5b",
+                        "transmissive":"#bbaaff",
+                        "shininess":100.0,
+                        "translucency":100.0,
+                        "refractiveIndex":1.25
+                    }
+                }],
+                "lights": [{
+                    "position": [10, 5, -4],
+                    "colour": [1.25, 1.25, 1.25],
+                    "radius": 5
+                }],
+                "objects": [{
+                    "type": "rectangle",
+                    "material": "shiny",
+                    "transform": {
+                        "position": [10, 10, 10],
+                        "rotation": [25, -45, 0],
+                        "scale": [20, 0, 50]
+                    }
+                }]
+            })"));
+            cook::Scene scene{};
+            scene.loadFromStream(input, false);
+            Assert::IsTrue(scene.lightCount() == 1);
+            Assert::IsTrue(scene.objectCount() == 1);
+            Assert::IsTrue(scene.materialCount() == 1);
         }
     };
 }

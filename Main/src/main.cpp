@@ -1,14 +1,7 @@
 #include "View.hpp"
-#include "Object.hpp"
-#include "Sphere.hpp"
-#include "Rectangle.hpp"
-#include "ResourceMap.hpp"
-#include "Ray.hpp"
-#include "Light.hpp"
-#include "Mat44.hpp"
-#include "Util.hpp"
 #include "Scene.hpp"
 #include <iostream>
+#include <fstream>
 #include <thread>
 #include <atomic>
 
@@ -21,7 +14,7 @@ namespace cook {
         Scene m_scene;
 
         struct {
-            const std::string outputFilename = "renders/box15.png";
+            const std::string outputFilename = "box18.png";
 
             const size_t vpWidth{ 400 };
             const size_t vpHeight{ 300 };
@@ -51,37 +44,13 @@ namespace cook {
             m_view = std::make_unique<View>(m_settings.vpWidth, m_settings.vpHeight, m_settings.camPos, m_settings.camTarget, m_settings.camDefaultUp,
                                             m_settings.camFOV, m_settings.camFarPlane, m_settings.camFocalLength, m_settings.camAperture);
 
-            // TODO: DUMMY SCENE
-            m_scene.createUnitRectangle("whiteWall")->transform()
-                .setScale(Vec3{ 50.f, 50.f, 50.f });
-            m_scene.createUnitRectangle("whiteWall")->transform()
-                .setPosition(Vec3{ 0.f, 50.f, 0.f })
-                .setScale(Vec3{ 50.f, 50.f, 50.f })
-                .setRotation(Vec3{ 180.f, 0.f, 0.f });
-            m_scene.createUnitRectangle("whiteWall")->transform()
-                .setPosition(Vec3{ 0.f, 25.f, -25.f })
-                .setScale(Vec3{ 50.f, 50.f, 50.f })
-                .setRotation(Vec3{ 90.f, 0.f, 0.f });
-            m_scene.createUnitRectangle("redWall")->transform()
-                .setPosition(Vec3{ 25.f, 25.f, 0.f })
-                .setScale(Vec3{ 50.f, 50.f, 50.f })
-                .setRotation(Vec3{ 0.f, 0.f, 90.f });
-            m_scene.createUnitRectangle("blueWall")->transform()
-                .setPosition(Vec3{ -25.f, 25.f, 0.f })
-                .setScale(Vec3{ 50.f, 50.f, 50.f })
-                .setRotation(Vec3{ 0.f, 0.f, -90.f });
-
-            m_scene.createUnitSphere("frostedGlass")->transform()
-                .setPosition(Vec3{ 10.f, 10.f, -5.f })
-                .setScale(Vec3{ 10.f, 10.f, 10.f });
-            m_scene.createUnitSphere("purpleMirror")->transform()
-                .setPosition(Vec3{ -10.f, 30.f, 0.f })
-                .setScale(Vec3{ 8.f, 8.f, 8.f });
-            m_scene.createUnitSphere("blueDiffuse")->transform()
-                .setPosition(Vec3{ -5.f, 6.f, 5.f })
-                .setScale(Vec3{ 6.f, 6.f, 6.f });
-
-            m_scene.createLight(Vec3{ 0.f, 40.f, 0.f }, 5.f, Colour{ 1.2f, 1.2f, 1.2f });
+            try {
+                m_scene.loadFromStream(std::ifstream("assets/simple.scene.json"), false);
+            }
+            catch(std::exception& ex) {
+                std::cerr << ex.what() << std::endl;
+                terminate();
+            }
         }
 
         Colour trace(Ray& a_ray, unsigned a_depth = 0) {

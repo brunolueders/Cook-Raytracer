@@ -1,32 +1,15 @@
 #include "Scene.hpp"
 #include <iostream>
 #include <sstream>
+#include <fstream>
 
 namespace cook {
 
-    Scene::Scene() {
-        // TODO: DUMMY MATERIALS
-        std::istringstream iss(R"([
-            { "name":"whiteWall", "ambient":"#e5e5e5", "diffuse":"#e5e5e5", "specular":"#000000", "transmissive":"#000000", "shininess":1, "translucency":1, "refractiveIndex":1},
-            { "name":"redWall", "ambient":"#ff6666", "diffuse":"#ff6666", "specular":"#000000", "transmissive":"#000000", "shininess":1, "translucency":1, "refractiveIndex":1},
-            { "name":"blueWall", "ambient":"#6666ff", "diffuse":"#6666ff", "specular":"#000000", "transmissive":"#000000", "shininess":1, "translucency":1, "refractiveIndex":1},
-            { "name":"frostedGlass", "ambient":"#000000", "diffuse":"#000000", "specular":"#333333", "transmissive":"#ffffff", "shininess":10, "translucency":10, "refractiveIndex":1.05},
-            { "name":"purpleMirror", "ambient":"#663399", "diffuse":"#663399", "specular":"#663399", "transmissive":"#000000", "shininess":1000, "translucency":1, "refractiveIndex":1},
-            { "name":"blueDiffuse", "ambient":"#4c99cc", "diffuse":"#4c99cc", "specular":"#000000", "transmissive":"#000000", "shininess":1, "translucency":1, "refractiveIndex":1}
-        ])");
-
-        try {
-            m_materials.addResources(iss);
-        }
-        catch(std::exception& ex) {
-            std::cerr << ex.what() << std::endl;
-        }
-    }
+    Scene::Scene()
+    {}
 
     Scene::~Scene() {
-        for(auto obj: m_objects) {
-            delete obj;
-        }
+        clear();
     }
 
     bool Scene::closestIntersection(Ray& a_ray, IntersectionInfo* a_info) {
@@ -41,6 +24,61 @@ namespace cook {
             }
         }
         return false;
+    }
+
+    void Scene::loadFromStream(std::istream& a_stream, bool a_keepCurrentData) {
+        if(!a_keepCurrentData) {
+            clear();
+        }
+        nlohmann::json json;
+        a_stream >> json;
+        
+        for(auto& res: json.at("resources")) {
+            auto resType = res.at("type").get<std::string>();
+            if(resType.compare("material") == 0) {
+                if(res.at("data").is_object()) {
+                    m_materials.addResources(res.at("data"));
+                }
+                else {
+                    m_materials.addResources(std::ifstream(res.at("data").get<std::string>()));
+                }
+            }
+            else if(resType.compare("mesh") == 0) {
+                if(res.at("data").is_object()) {
+                    m_meshes.addResources(res.at("data"));
+                }
+                else {
+                    m_meshes.addResources(std::ifstream(res.at("data").get<std::string>()));
+                }
+            }
+        }
+
+        for(auto& light: json.at("lights")) {
+            m_lights.push_back(ResourceParsing::parse<Light>(light));
+        }
+
+        for(auto& obj: json.at("objects")) {
+            auto objType = obj.at("type").get<std::string>();
+            auto material = obj.at("material").get<std::string>();
+            auto transform = ResourceParsing::parse<Transform>(obj.at("transform"));
+            Object* newObj;
+            if(objType.compare("rectangle") == 0) {
+                newObj = createUnitRectangle(material);
+            }
+            else if(objType.compare("sphere") == 0) {
+                newObj = createUnitSphere(material);
+            }
+            else if(objType.compare("triangle") == 0) {
+                newObj = createUnitTriangle(material);
+            }
+            else {
+                newObj = createMesh(objType, material);
+            }
+
+            if(newObj) {
+                newObj->transform() = transform;
+            }
+        }
     }
 
     Object* Scene::createMesh(std::string a_meshID, std::string a_materialID) {
@@ -84,12 +122,34 @@ namespace cook {
         m_lights.emplace_back(a_position, a_radius, a_colour);
     }
 
+    void Scene::clear() {
+        for(auto obj: m_objects) {
+            delete obj;
+        }
+        m_objects.clear();
+        m_lights.clear();
+        m_materials.clear();
+        m_meshes.clear();
+    }
+
     Scene::ConstLightIterator Scene::lightsBegin() const {
         return m_lights.cbegin();
     }
 
     Scene::ConstLightIterator Scene::lightsEnd() const {
         return m_lights.cend();
+    }
+
+    size_t Scene::materialCount() const {
+        return m_materials.count();
+    }
+
+    size_t Scene::objectCount() const {
+        return m_objects.size();
+    }
+
+    size_t Scene::lightCount() const {
+        return m_lights.size();
     }
 
 }

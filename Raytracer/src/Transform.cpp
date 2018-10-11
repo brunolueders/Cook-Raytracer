@@ -9,6 +9,13 @@ namespace cook {
         m_matrixUpdated{ true }
     {}
 
+    Transform::Transform(Transform & a_transform) :
+        m_matrixUpdated{ false },
+        m_position{ a_transform.m_position },
+        m_rotation{ a_transform.m_rotation },
+        m_scale{ a_transform.m_scale }
+    {}
+
     Vec3 Transform::pointToWorld(Vec3 a_v) {
         if(!m_matrixUpdated) {
             _updateMatrix();

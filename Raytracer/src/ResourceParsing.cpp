@@ -1,23 +1,34 @@
 #include "ResourceParsing.hpp"
 #include "Material.hpp"
 #include "Mesh.hpp"
+#include "Light.hpp"
+#include "Transform.hpp"
 
 namespace cook {
     namespace ResourceParsing {
 
         template<>
         Colour parse(nlohmann::json& a_json) {
-            auto str = a_json.get<std::string>();
-            if(str[0] != '#') {
-                throw nlohmann::detail::parse_error::create(101, 0, "unexpected token; expected '#'");
-            }
+            if(a_json.is_string()) {
+                auto str = a_json.get<std::string>();
+                if(str[0] != '#') {
+                    throw nlohmann::detail::parse_error::create(101, 0, "unexpected token; expected '#'");
+                }
 
-            auto num = std::stoi(str.substr(1), nullptr, 16);
-            return Colour{
-                static_cast<unsigned char>(num >> 16)/255.f,
-                static_cast<unsigned char>(num >> 8)/255.f,
-                static_cast<unsigned char>(num)/255.f
-            };
+                auto num = std::stoi(str.substr(1), nullptr, 16);
+                return Colour{
+                    static_cast<unsigned char>(num >> 16)/255.f,
+                    static_cast<unsigned char>(num >> 8)/255.f,
+                    static_cast<unsigned char>(num)/255.f
+                };
+            }
+            else {
+                return Colour{
+                    a_json.at(0).get<float>(),
+                    a_json.at(1).get<float>(),
+                    a_json.at(2).get<float>()
+                };
+            }
         }
 
         template<>
@@ -35,6 +46,14 @@ namespace cook {
                 a_json.at(1).get<float>(),
                 a_json.at(2).get<float>()
             };
+        }
+
+        template<>
+        Transform parse(nlohmann::json& a_json) {
+            return Transform{}
+                .setPosition(parse<Vec3>(a_json.at("position")))
+                .setRotation(parse<Vec3>(a_json.at("rotation")))
+                .setScale(parse<Vec3>(a_json.at("scale")));
         }
 
         template<>
@@ -73,6 +92,14 @@ namespace cook {
                 tris.push_back(parse<Triangle>(tri));
             }
             return Mesh{ tris };
+        }
+
+        template<>
+        Light parse(nlohmann::json& a_json) {
+            auto position = parse<Vec3>(a_json.at("position"));
+            auto colour = parse<Colour>(a_json.at("colour"));
+            auto radius = a_json.at("radius").get<float>();
+            return Light{ position, radius, colour };
         }
 
     }

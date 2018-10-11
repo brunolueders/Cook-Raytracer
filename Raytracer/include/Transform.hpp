@@ -23,6 +23,7 @@ namespace cook{
 
     public:
         Transform();
+        Transform(Transform& a_transform);
 
         Vec3 pointToWorld(Vec3 a_v);
         Vec3 pointToLocal(Vec3 a_v);
