@@ -14,10 +14,10 @@ namespace cook {
         Scene m_scene;
 
         struct {
-            const std::string outputFilename = "box18.png";
+            const std::string outputFilename = "renders/box18.png";
 
-            const size_t vpWidth{ 400 };
-            const size_t vpHeight{ 300 };
+            const size_t vpWidth{ 768 };
+            const size_t vpHeight{ 144 };
 
             const Vec3  camDefaultUp{ -Vec3::unitY };
             const Vec3  camPos{ .0f, 25.f, 55.f };
@@ -28,12 +28,9 @@ namespace cook {
             const float camFocalLength{ 55.f };
             const float camAperture{ 1.f };
 
-            const unsigned numSubpixels{ 2 };
-            const unsigned numSamplesPerSubpixel{ 2 };
-            const unsigned maxRecursionDepth{ 3 };
-            
-            const Colour backgroundColour{};
-            const Colour ambientLightColour{ .2f, .2f, .2f };
+            const unsigned numSubpixels{ 4 };
+            const unsigned numSamplesPerSubpixel{ 20 };
+            const unsigned maxRecursionDepth{ 6 };
 
         } const m_settings;
 
@@ -58,14 +55,14 @@ namespace cook {
                 return Colour{};
             }
 
-            auto colour = m_settings.backgroundColour;
+            auto colour = m_scene.backgroundColour();
             IntersectionInfo info;
             if(m_scene.closestIntersection(a_ray, &info)) {
                 const auto mat = info.material;
                 auto eps = 1e-3f;
 
                 // Shadow rays
-                colour = m_settings.ambientLightColour*mat->ambient();
+                colour = m_scene.ambientLight()*mat->ambient();
                 for(auto lightIt = m_scene.lightsBegin(); lightIt != m_scene.lightsEnd(); ++lightIt) {
                     // Construct shadow ray to random point on light source
                     auto samplePoint = lightIt->sample(info.point, info.normal, a_ray.prototype());

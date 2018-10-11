@@ -32,6 +32,9 @@ namespace cook {
         }
         nlohmann::json json;
         a_stream >> json;
+
+        m_ambientLight = ResourceParsing::parse<Colour>(json.at("ambient-light"));
+        m_backgroundColour = ResourceParsing::parse<Colour>(json.at("background-colour"));
         
         for(auto& res: json.at("resources")) {
             auto resType = res.at("type").get<std::string>();
@@ -130,6 +133,14 @@ namespace cook {
         m_lights.clear();
         m_materials.clear();
         m_meshes.clear();
+    }
+
+    Colour Scene::ambientLight() const {
+        return m_ambientLight;
+    }
+
+    Colour Scene::backgroundColour() const {
+        return m_backgroundColour;
     }
 
     Scene::ConstLightIterator Scene::lightsBegin() const {

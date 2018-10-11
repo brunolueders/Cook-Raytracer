@@ -220,6 +220,7 @@ namespace Testing {
 
         TEST_METHOD(Scene_loadFromStream) {
             std::istringstream input(std::string(R"({
+                "ambient-light": [0.1, 0.1, 0.1],
                 "resources": [{
                     "type": "material",
                     "data": {

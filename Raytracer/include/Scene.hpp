@@ -1,3 +1,11 @@
+/*******************************************************/
+/* COOK-STYLE RAYTRACER                                */
+/*                                                     */
+/* Scene management                                    */
+/*                                                     */
+/* Copyright (c) 2018 Bruno Lüders                     */
+/* All project code licensed under the MIT license.    */
+/*******************************************************/
 #pragma once
 #include "Object.hpp"
 #include "ResourceMap.hpp"
@@ -13,6 +21,9 @@ namespace cook {
         MeshMap              m_meshes;
         std::vector<Object*> m_objects;
         std::vector<Light>   m_lights;
+
+        Colour m_ambientLight;
+        Colour m_backgroundColour;
 
     public:
         using ConstLightIterator = std::vector<Light>::const_iterator;
@@ -33,6 +44,9 @@ namespace cook {
         void createLight(Vec3 a_position, float a_radius, Colour a_colour);
 
         void clear();
+
+        Colour ambientLight() const;
+        Colour backgroundColour() const;
 
         ConstLightIterator lightsBegin() const;
         ConstLightIterator lightsEnd() const;
