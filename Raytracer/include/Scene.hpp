@@ -15,6 +15,8 @@ namespace cook {
         std::vector<Light>   m_lights;
 
     public:
+        using ConstLightIterator = std::vector<Light>::const_iterator;
+
         Scene();
         ~Scene();
 
@@ -27,8 +29,9 @@ namespace cook {
         Object* createUnitTriangle(std::string a_materialID);
         
         void createLight(Vec3 a_position, float a_radius, Colour a_colour);
-        
-        const std::vector<Light>& lights() const;
+
+        ConstLightIterator lightsBegin() const;
+        ConstLightIterator lightsEnd() const;
     };
 
 }

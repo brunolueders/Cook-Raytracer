@@ -84,8 +84,12 @@ namespace cook {
         m_lights.emplace_back(a_position, a_radius, a_colour);
     }
 
-    const std::vector<Light>& Scene::lights() const {
-        return m_lights;
+    Scene::ConstLightIterator Scene::lightsBegin() const {
+        return m_lights.cbegin();
+    }
+
+    Scene::ConstLightIterator Scene::lightsEnd() const {
+        return m_lights.cend();
     }
 
 }

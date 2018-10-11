@@ -18,7 +18,6 @@ namespace cook {
         Vec3      point, normal;
         float     param;
         Material* material;
-        //size_t    index;
     };
 
     class Ray {
