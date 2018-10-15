@@ -12,6 +12,7 @@
 #include "Rectangle.hpp"
 #include "Sphere.hpp"
 #include "Light.hpp"
+#include "Camera.hpp"
 
 namespace cook {
 

@@ -115,6 +115,8 @@
   <ItemGroup>
     <ClInclude Include="dependencies\lodepng\lodepng.h" />
     <ClInclude Include="dependencies\nlohmann\json.hpp" />
+    <ClInclude Include="include\Camera.hpp" />
+    <ClInclude Include="include\Canvas.hpp" />
     <ClInclude Include="include\Colour.hpp" />
     <ClInclude Include="include\Intersectable.hpp" />
     <ClInclude Include="include\Light.hpp" />
@@ -139,6 +141,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dependencies\lodepng\lodepng.cpp" />
+    <ClCompile Include="src\Camera.cpp" />
+    <ClCompile Include="src\Canvas.cpp" />
     <ClCompile Include="src\Colour.cpp" />
     <ClCompile Include="src\Light.cpp" />
     <ClCompile Include="src\Mat44.cpp" />
