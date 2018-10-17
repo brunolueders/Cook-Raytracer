@@ -125,6 +125,7 @@
     <ClInclude Include="include\Mesh.hpp" />
     <ClInclude Include="include\Object.hpp" />
     <ClInclude Include="include\Ray.hpp" />
+    <ClInclude Include="include\Raytracer.hpp" />
     <ClInclude Include="include\Rectangle.hpp" />
     <ClInclude Include="include\Scene.hpp" />
     <ClInclude Include="include\Shape.hpp" />
@@ -149,6 +150,7 @@
     <ClCompile Include="src\Mesh.cpp" />
     <ClCompile Include="src\Object.cpp" />
     <ClCompile Include="src\Ray.cpp" />
+    <ClCompile Include="src\Raytracer.cpp" />
     <ClCompile Include="src\Rectangle.cpp" />
     <ClCompile Include="src\Scene.cpp" />
     <ClCompile Include="src\Shape.cpp" />
