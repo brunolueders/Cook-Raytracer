@@ -22,6 +22,7 @@ namespace cook {
         float               m_aspect{ 0.f };
 
     public:
+        Canvas();
         Canvas(std::size_t a_width, std::size_t a_height);
 
         std::size_t width() const;

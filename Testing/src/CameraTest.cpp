@@ -21,5 +21,11 @@ namespace Testing {
             Assert::IsTrue(f.closeEnough(cook::Vec3{ -200.f, -200.f, -600.f }, 1e-3f));
         }
 
+        TEST_METHOD(Camera_distanceToFarPlane) {
+            cook::Camera cam{ cook::Vec3{}, -cook::Vec3::unitZ, cook::Vec3::unitY, cook::HALFPI, 100.f, 10.f, 1.f };
+            auto d = cam.distanceToFarPlane(cook::Vec3{ .66667f, .33333f, -.66667f });
+            Assert::IsTrue(cook::closeEnough(d, 150.f, 1e-3f));
+        }
+
     };
 }

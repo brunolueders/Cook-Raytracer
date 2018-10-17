@@ -137,7 +137,6 @@
     <ClInclude Include="include\Vec2.hpp" />
     <ClInclude Include="include\Vec3.hpp" />
     <ClInclude Include="include\Vertex.hpp" />
-    <ClInclude Include="include\View.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dependencies\lodepng\lodepng.cpp" />
@@ -162,7 +161,6 @@
     <ClCompile Include="src\Vec2.cpp" />
     <ClCompile Include="src\Vec3.cpp" />
     <ClCompile Include="src\Vertex.cpp" />
-    <ClCompile Include="src\View.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

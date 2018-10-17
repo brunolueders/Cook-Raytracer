@@ -1,4 +1,4 @@
-#include "View.hpp"
+#include "Canvas.hpp"
 #include "Scene.hpp"
 #include <iostream>
 #include <fstream>
@@ -9,28 +9,18 @@ namespace cook {
 
     class Raytracer final {
     protected:
-        std::unique_ptr<View> m_view;
-
-        Scene m_scene;
+        Canvas m_canvas;
+        Scene  m_scene;
 
         struct {
-            const std::string outputFilename = "renders/box18.png";
+            const std::string outputFilename = "renders/box19.png";
 
-            const size_t vpWidth{ 768 };
-            const size_t vpHeight{ 144 };
+            const size_t vpWidth{ 400 };
+            const size_t vpHeight{ 300 };
 
-            const Vec3  camDefaultUp{ -Vec3::unitY };
-            const Vec3  camPos{ .0f, 25.f, 55.f };
-            const Vec3  camTarget{ 0.f, 25.0f, 0.f };
-
-            const float camFOV{ PI180*60.f };
-            const float camFarPlane{ 400.f };
-            const float camFocalLength{ 55.f };
-            const float camAperture{ 1.f };
-
-            const unsigned numSubpixels{ 4 };
-            const unsigned numSamplesPerSubpixel{ 20 };
-            const unsigned maxRecursionDepth{ 6 };
+            const unsigned numSubpixels{ 2 };
+            const unsigned numSamplesPerSubpixel{ 2 };
+            const unsigned maxRecursionDepth{ 3 };
 
         } const m_settings;
 
@@ -38,8 +28,7 @@ namespace cook {
         Raytracer() {}
 
         void init() {
-            m_view = std::make_unique<View>(m_settings.vpWidth, m_settings.vpHeight, m_settings.camPos, m_settings.camTarget, m_settings.camDefaultUp,
-                                            m_settings.camFOV, m_settings.camFarPlane, m_settings.camFocalLength, m_settings.camAperture);
+            m_canvas = Canvas{ m_settings.vpWidth, m_settings.vpHeight };
 
             try {
                 m_scene.loadFromStream(std::ifstream("assets/simple.scene.json"), false);
@@ -96,6 +85,28 @@ namespace cook {
             return colour;
         }
 
+        size_t getPrototype(float a_u, float a_v) {
+            static const std::array<size_t, 9> pattern{ 1, 0, 6, 2, 7, 8, 4, 3, 5 };
+            auto i = static_cast<size_t>(std::floor(3.f*a_u))%3;
+            auto j = static_cast<size_t>(std::floor(3.f*a_v))%3;
+            return pattern[j*3 + i];
+        }
+
+        Ray pixelRay(float a_u, float a_v) {
+            // Calculate focal point from pixel coordinates
+            auto dir = m_canvas.pixelToCamera(a_u, a_v, m_scene.camera().near()).normalize();
+            auto focalPoint = m_scene.camera().calculateFocalPoint(dir);
+            
+            // Sample aperture disc
+            auto prototype = getPrototype(a_u, a_v);
+            auto apertureSample = m_scene.camera().sampleAperture(prototype);
+
+            // Create primary ray
+            dir = (focalPoint - apertureSample).normalize();
+            auto length = m_scene.camera().distanceToFarPlane(dir);
+            return Ray{ apertureSample, dir, length, prototype };
+        }
+
         std::atomic<size_t> progress{ 0 };
 
         void renderPixelRange(const size_t x0, const size_t y0, const size_t x1, const size_t y1) {
@@ -111,12 +122,12 @@ namespace cook {
                             for(size_t k = 0; k < m_settings.numSamplesPerSubpixel; k++) {
                                 auto offsX = (static_cast<float>(sx) + urand())*subpixelSpacing;
                                 auto offsY = (static_cast<float>(sy) + urand())*subpixelSpacing;
-                                auto ray = m_view->pixelRay(static_cast<float>(x) + offsX, static_cast<float>(y) + offsY);
+                                auto ray = pixelRay(static_cast<float>(x) + offsX, static_cast<float>(y) + offsY);
                                 colour += trace(ray)/static_cast<float>(m_settings.numSamplesPerSubpixel);
                             }
                         }
                     }
-                    m_view->setPixel(x, y, colour/subpixelsSq);
+                    m_canvas.setPixel(x, y, colour/subpixelsSq);
                     if(++progress%numPixels == 0) {
                         std::cout << progress/numPixels << "%\r";
                     }
@@ -135,7 +146,7 @@ namespace cook {
             t2.join();
             t3.join();
             t4.join();
-            m_view->writeToPNG(m_settings.outputFilename);
+            m_canvas.writeToPNG(m_settings.outputFilename);
         }
     };
 

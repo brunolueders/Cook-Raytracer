@@ -59,7 +59,7 @@ namespace Testing {
                 "transmissive":"#bbaaff",
                 "shininess":100.0,
                 "translucency":100.0,
-                "refractiveIndex":1.25
+                "refractive-index":1.25
             })"_json;
             auto mat = cook::ResourceParsing::parse<cook::Material>(j);
             Assert::IsTrue(mat.ambient().closeEnough(cook::Colour{ .647f, .647f, .647f }, 1e-3f));
@@ -74,7 +74,7 @@ namespace Testing {
         TEST_METHOD(parse_Vertex) {
             nlohmann::json j = R"({
                 "position": [ 100, -25, 15.5 ],
-                "texCoords": [ 0.25, 0.5 ],
+                "tex-coords": [ 0.25, 0.5 ],
                 "normal": [ 0.25, 0.3, -0.1 ]
             })"_json;
             auto v = cook::ResourceParsing::parse<cook::Vertex>(j);
@@ -87,17 +87,17 @@ namespace Testing {
             nlohmann::json j = R"({
                 "v0": {
                     "position": [ -1, 1, 1 ],
-                    "texCoords": [ 0, 0 ],
+                    "tex-coords": [ 0, 0 ],
                     "normal": [ 1, 0, 0 ]
                 },
                 "v1": {
                     "position": [ 1, 1, -1 ],
-                    "texCoords": [ 0, 1 ],
+                    "tex-coords": [ 0, 1 ],
                     "normal": [ 0, 1, 0 ]
                 },
                 "v2": {
                     "position": [ 1, -1, 1 ],
-                    "texCoords": [ 1, 0 ],
+                    "tex-coords": [ 1, 0 ],
                     "normal": [ 0, 0, 1 ]
                 }
             })"_json;
@@ -113,34 +113,34 @@ namespace Testing {
                     {
                         "v0": {
                             "position": [ -1, 1, 1 ],
-                            "texCoords": [ 0, 0 ],
+                            "tex-coords": [ 0, 0 ],
                             "normal": [ 1, 0, 0 ]
                         },
                         "v1": {
                             "position": [ 1, 1, -1 ],
-                            "texCoords": [ 0, 1 ],
+                            "tex-coords": [ 0, 1 ],
                             "normal": [ 0, 1, 0 ]
                         },
                         "v2": {
                             "position": [ 1, -1, 1 ],
-                            "texCoords": [ 1, 0 ],
+                            "tex-coords": [ 1, 0 ],
                             "normal": [ 0, 0, 1 ]
                         }
                     },
                     {
                         "v0": {
                             "position": [ -1, 1, 1 ],
-                            "texCoords": [ 0, 0 ],
+                            "tex-coords": [ 0, 0 ],
                             "normal": [ 1, 0, 0 ]
                         },
                         "v1": {
                             "position": [ 1, 1, -1 ],
-                            "texCoords": [ 0, 1 ],
+                            "tex-coords": [ 0, 1 ],
                             "normal": [ 0, 1, 0 ]
                         },
                         "v2": {
                             "position": [ 1, -1, 1 ],
-                            "texCoords": [ 1, 0 ],
+                            "tex-coords": [ 1, 0 ],
                             "normal": [ 0, 0, 1 ]
                         }
                     }
@@ -162,6 +162,26 @@ namespace Testing {
             Assert::IsTrue(l.radius() == 5.f);
         }
 
+        TEST_METHOD(parse_Camera) {
+            nlohmann::json j = R"({
+                "position": [ 20, 0, 5 ],
+                "target": [0, 0, 0],
+                "standard-up": [ 0, 1, 0 ],
+                "fov": 60,
+                "far": 200,
+                "focal-length": 100,
+                "aperture": 25
+            })"_json;
+            auto c = cook::ResourceParsing::parse<cook::Camera>(j);
+            Assert::IsTrue(c.position() == cook::Vec3{ 20.f, 0.f, 5.f });
+            Assert::IsTrue(c.stdUp() == cook::Vec3::unitY);
+            Assert::IsTrue(cook::closeEnough(c.fov(), 1.0472f, 1e-3f));
+            Assert::IsTrue(cook::closeEnough(c.near(), 1.7321f, 1e-3f));
+            Assert::IsTrue(c.far() == 200.f);
+            Assert::IsTrue(c.focalLength() == 100.f);
+            Assert::IsTrue(c.aperture() == 25.f);
+        }
+
         TEST_METHOD(MaterialMap_addResources_Multiple) {
             nlohmann::json j = R"([
                 {
@@ -172,7 +192,7 @@ namespace Testing {
                     "transmissive":"#bbaaff",
                     "shininess":100.0,
                     "translucency":100.0,
-                    "refractiveIndex":1.25
+                    "refractive-index":1.25
                 },
                 {
                     "name":"wood",
@@ -182,7 +202,7 @@ namespace Testing {
                     "transmissive":"#bbaaff",
                     "shininess":100.0,
                     "translucency":100.0,
-                    "refractiveIndex":1.25
+                    "refractive-index":1.25
                 },
                 {
                     "name":"copper",
@@ -192,7 +212,7 @@ namespace Testing {
                     "transmissive":"#bbaaff",
                     "shininess":100.0,
                     "translucency":100.0,
-                    "refractiveIndex":1.25
+                    "refractive-index":1.25
                 }
             ])"_json;
             cook::MaterialMap map{};
@@ -211,7 +231,7 @@ namespace Testing {
                 "transmissive":"#bbaaff",
                 "shininess":100.0,
                 "translucency":100.0,
-                "refractiveIndex":1.25
+                "refractive-index":1.25
             })"_json;
             cook::MaterialMap map{};
             map.addResources(j);
@@ -222,6 +242,15 @@ namespace Testing {
             std::istringstream input(std::string(R"({
                 "ambient-light": [0.1, 0.1, 0.1],
                 "background-colour": "#77ff44",
+                "camera": {
+                    "position": [ 20, 0, 5 ],
+                    "target": [0, 0, 0],
+                    "standard-up": [ 0, 1, 0 ],
+                    "fov": 60,
+                    "far": 200,
+                    "focal-length": 100,
+                    "aperture": 25
+                },
                 "resources": [{
                     "type": "material",
                     "data": {
@@ -232,7 +261,7 @@ namespace Testing {
                         "transmissive":"#bbaaff",
                         "shininess":100.0,
                         "translucency":100.0,
-                        "refractiveIndex":1.25
+                        "refractive-index":1.25
                     }
                 }],
                 "lights": [{

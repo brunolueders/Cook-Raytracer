@@ -1,4 +1,5 @@
 #include "Vec3.hpp"
+#include "Util.hpp"
 #include <cmath>
 
 namespace cook {
@@ -44,10 +45,9 @@ namespace cook {
     }
 
     bool Vec3::closeEnough(const Vec3& a_b, float a_tol) {
-        auto absDx = abs(x - a_b.x);
-        auto absDy = abs(y - a_b.y);
-        auto absDz = abs(z - a_b.z);
-        return (absDx < a_tol) && (absDy < a_tol) && (absDz < a_tol);
+        return cook::closeEnough(x, a_b.x, a_tol) &&
+               cook::closeEnough(y, a_b.y, a_tol) &&
+               cook::closeEnough(z, a_b.z, a_tol);
     }
 
     Vec3& Vec3::operator+=(const Vec3& a_b) {

@@ -3,6 +3,7 @@
 #include "Mesh.hpp"
 #include "Light.hpp"
 #include "Transform.hpp"
+#include "Camera.hpp"
 
 namespace cook {
     namespace ResourceParsing {
@@ -64,7 +65,7 @@ namespace cook {
             auto transmissive = parse<Colour>(a_json.at("transmissive"));
             auto shininess = a_json.at("shininess").get<float>();
             auto translucency = a_json.at("translucency").get<float>();
-            auto refractiveIndex = a_json.at("refractiveIndex").get<float>();
+            auto refractiveIndex = a_json.at("refractive-index").get<float>();
             return Material{ ambient, diffuse, specular,
                 transmissive, shininess, translucency, refractiveIndex };
         }
@@ -72,7 +73,7 @@ namespace cook {
         template<>
         Vertex parse(nlohmann::json& a_json) {
             auto position = parse<Vec3>(a_json.at("position"));
-            auto texCoords = parse<Vec2>(a_json.at("texCoords"));
+            auto texCoords = parse<Vec2>(a_json.at("tex-coords"));
             auto normal = parse<Vec3>(a_json.at("normal"));
             return Vertex{ position, texCoords, normal };
         }
@@ -100,6 +101,18 @@ namespace cook {
             auto colour = parse<Colour>(a_json.at("colour"));
             auto radius = a_json.at("radius").get<float>();
             return Light{ position, radius, colour };
+        }
+
+        template<>
+        Camera parse(nlohmann::json& a_json) {
+            auto position = parse<Vec3>(a_json.at("position"));
+            auto target = parse<Vec3>(a_json.at("target"));
+            auto stdup = parse<Vec3>(a_json.at("standard-up"));
+            auto fov = a_json.at("fov").get<float>();
+            auto far = a_json.at("far").get<float>();
+            auto focalLength = a_json.at("focal-length").get<float>();
+            auto aperture = a_json.at("aperture").get<float>();
+            return Camera{ position, target, stdup, fov, far, focalLength, aperture };
         }
 
     }

@@ -23,6 +23,8 @@ namespace cook {
         std::vector<Object*> m_objects;
         std::vector<Light>   m_lights;
 
+        Camera m_camera;
+
         Colour m_ambientLight;
         Colour m_backgroundColour;
 
@@ -46,8 +48,9 @@ namespace cook {
 
         void clear();
 
-        Colour ambientLight() const;
-        Colour backgroundColour() const;
+        Camera& camera();
+        Colour  ambientLight() const;
+        Colour  backgroundColour() const;
 
         ConstLightIterator lightsBegin() const;
         ConstLightIterator lightsEnd() const;

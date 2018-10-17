@@ -20,6 +20,8 @@ namespace cook {
     extern float urand();
     extern float stratifiedSample(size_t a_index);
 
+    extern bool closeEnough(float a_a, float a_b, float a_tol);
+
     template<typename T>
     T* toPointer(T& a_ref) {
         return &a_ref;

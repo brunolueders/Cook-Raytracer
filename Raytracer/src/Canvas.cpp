@@ -3,12 +3,16 @@
 #include <cassert>
 
 namespace cook {
+    Canvas::Canvas() :
+        Canvas{ 100, 100 }
+    {}
 
     Canvas::Canvas(std::size_t a_width, std::size_t a_height) :
         m_width{ a_width },
         m_height{ a_height },
         m_size{ a_width*a_height },
-        m_aspect{ static_cast<float>(a_width)/a_height }
+        m_aspect{ static_cast<float>(a_width)/a_height },
+        m_pixels( a_width*a_height )
     {}
 
     std::size_t Canvas::width() const {

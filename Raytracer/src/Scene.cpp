@@ -35,7 +35,8 @@ namespace cook {
 
         m_ambientLight = ResourceParsing::parse<Colour>(json.at("ambient-light"));
         m_backgroundColour = ResourceParsing::parse<Colour>(json.at("background-colour"));
-        
+        m_camera = ResourceParsing::parse<Camera>(json.at("camera"));
+
         for(auto& res: json.at("resources")) {
             auto resType = res.at("type").get<std::string>();
             if(resType.compare("material") == 0) {
@@ -141,6 +142,10 @@ namespace cook {
 
     Colour Scene::backgroundColour() const {
         return m_backgroundColour;
+    }
+
+    Camera& Scene::camera() {
+        return m_camera;
     }
 
     Scene::ConstLightIterator Scene::lightsBegin() const {

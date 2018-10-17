@@ -3,15 +3,19 @@
 
 namespace cook {
 
+    Camera::Camera() :
+        Camera{ Vec3::zero, Vec3::unitZ, Vec3::unitY, HALFPI, 1000.f, 1000.f, 1.f }
+    {}
+
     Camera::Camera(const Vec3 & a_position, const Vec3 & a_target, const Vec3 & a_stdup,
                    float a_fov, float a_far, float a_focalLength, float a_aperture) :
         m_position{ a_position },
         m_stdup{ a_stdup },
-        m_near{ 1.f/std::tan(a_fov/2.f) },
+        m_fov{ a_fov*PI180 },
+        m_near{ 1.f/std::tan(m_fov/2.f) },
         m_far{ a_far },
         m_focalLength{ a_focalLength },
-        m_aperture{ a_aperture },
-        m_fov{ a_fov }
+        m_aperture{ a_aperture }
     {
         lookAt(a_target);
     }
@@ -22,6 +26,14 @@ namespace cook {
 
     Vec3 Camera::stdUp() const {
         return m_stdup;
+    }
+
+    float Camera::near() const {
+        return m_near;
+    }
+
+    float Camera::far() const {
+        return m_far;
     }
 
     float Camera::focalLength() const {
@@ -65,6 +77,10 @@ namespace cook {
         auto theta = lerp(urand(), jitterMin, jitterMin + incr);
 
         return pointToWorld(Vec3 { r*std::cos(theta), r*std::sin(theta), 0.f });
+    }
+
+    float Camera::distanceToFarPlane(Vec3 a_dir) const {
+        return m_far/a_dir.dot(m_look);
     }
 
 }
