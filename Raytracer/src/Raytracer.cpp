@@ -1,42 +1,31 @@
 #include "Raytracer.hpp"
-#include <fstream>
 #include <iostream>
 #include <thread>
 
 namespace cook {
-    Raytracer::Raytracer()
+    Raytracer::Raytracer(Canvas* a_canvas, Scene* a_scene) :
+        m_canvas{ a_canvas },
+        m_scene{ a_scene }
     {}
 
-    void Raytracer::init() {
-        m_canvas = Canvas{ m_settings.vpWidth, m_settings.vpHeight };
-
-        try {
-            m_scene.loadFromStream(std::ifstream("assets/simple.scene.json"), false);
-        }
-        catch(std::exception& ex) {
-            std::cerr << ex.what() << std::endl;
-            terminate();
-        }
-    }
-
     Colour Raytracer::trace(Ray& a_ray, unsigned a_depth) {
-        if(a_depth >= m_settings.maxRecursionDepth) {
+        if(a_depth >= m_maxRecursionDepth) {
             return Colour{};
         }
 
-        auto colour = m_scene.backgroundColour();
+        auto colour = m_scene->backgroundColour();
         IntersectionInfo info;
-        if(m_scene.closestIntersection(a_ray, &info)) {
+        if(m_scene->closestIntersection(a_ray, &info)) {
             const auto mat = info.material;
             auto eps = 1e-3f;
 
             // Shadow rays
-            colour = m_scene.ambientLight()*mat->ambient();
-            for(auto lightIt = m_scene.lightsBegin(); lightIt != m_scene.lightsEnd(); ++lightIt) {
+            colour = m_scene->ambientLight()*mat->ambient();
+            for(auto lightIt = m_scene->lightsBegin(); lightIt != m_scene->lightsEnd(); ++lightIt) {
                 // Construct shadow ray to random point on light source
                 auto samplePoint = lightIt->sample(info.point, info.normal, a_ray.prototype());
                 Ray shadowRay{ info.point + info.normal*eps, samplePoint, a_ray.prototype() };
-                if(!m_scene.doesIntersect(shadowRay)) {
+                if(!m_scene->doesIntersect(shadowRay)) {
                     // Phong shading
                     auto intensity = shadowRay.direction().dot(info.normal);
                     if(intensity > 0.f) {
@@ -74,38 +63,38 @@ namespace cook {
 
     Ray Raytracer::pixelRay(float a_u, float a_v) {
         // Calculate focal point from pixel coordinates
-        auto dir = m_canvas.pixelToCamera(a_u, a_v, m_scene.camera().near()).normalize();
-        auto focalPoint = m_scene.camera().calculateFocalPoint(dir);
+        auto dir = m_canvas->pixelToCamera(a_u, a_v, m_scene->camera().near()).normalize();
+        auto focalPoint = m_scene->camera().calculateFocalPoint(dir);
 
         // Sample aperture disc
         auto prototype = getPrototype(a_u, a_v);
-        auto apertureSample = m_scene.camera().sampleAperture(prototype);
+        auto apertureSample = m_scene->camera().sampleAperture(prototype);
 
         // Create primary ray
         dir = (focalPoint - apertureSample).normalize();
-        auto length = m_scene.camera().distanceToFarPlane(dir);
+        auto length = m_scene->camera().distanceToFarPlane(dir);
         return Ray{ apertureSample, dir, length, prototype };
     }
 
     void Raytracer::renderPixelRange(const size_t x0, const size_t y0, const size_t x1, const size_t y1) {
-        static const auto subpixelsSq = static_cast<float>(m_settings.numSubpixels*m_settings.numSubpixels);
-        static const auto subpixelSpacing = 1.f/m_settings.numSubpixels;
+        static const auto subpixelsSq = static_cast<float>(m_numSubpixels*m_numSubpixels);
+        static const auto subpixelSpacing = 1.f/m_numSubpixels;
 
-        const auto numPixels = m_settings.vpHeight*m_settings.vpWidth/100;
+        const auto numPixels = m_canvas->size()/100;
         for(size_t y = y0; y <= y1; ++y) {
             for(size_t x = x0; x <= x1; ++x) {
                 Colour colour;
-                for(size_t sy = 0; sy < m_settings.numSubpixels; ++sy) {
-                    for(size_t sx = 0; sx < m_settings.numSubpixels; ++sx) {
-                        for(size_t k = 0; k < m_settings.numSamplesPerSubpixel; k++) {
+                for(size_t sy = 0; sy < m_numSubpixels; ++sy) {
+                    for(size_t sx = 0; sx < m_numSubpixels; ++sx) {
+                        for(size_t k = 0; k < m_numSamplesPerSubpixel; k++) {
                             auto offsX = (static_cast<float>(sx) + urand())*subpixelSpacing;
                             auto offsY = (static_cast<float>(sy) + urand())*subpixelSpacing;
                             auto ray = pixelRay(static_cast<float>(x) + offsX, static_cast<float>(y) + offsY);
-                            colour += trace(ray)/static_cast<float>(m_settings.numSamplesPerSubpixel);
+                            colour += trace(ray)/static_cast<float>(m_numSamplesPerSubpixel);
                         }
                     }
                 }
-                m_canvas.setPixel(x, y, colour/subpixelsSq);
+                m_canvas->setPixel(x, y, colour/subpixelsSq);
                 if(++progress%numPixels == 0) {
                     std::cout << progress/numPixels << "%\r";
                 }
@@ -113,9 +102,15 @@ namespace cook {
         }
     }
 
-    void Raytracer::render() {
-        const auto w = m_settings.vpWidth;
-        const auto h = m_settings.vpHeight;
+    void Raytracer::render(std::string a_filename, unsigned a_numSubpixels, unsigned a_samplesPerSubpixel,
+                           unsigned a_maxRecursionDepth)
+    {
+        m_numSubpixels = a_numSubpixels;
+        m_numSamplesPerSubpixel = a_samplesPerSubpixel;
+        m_maxRecursionDepth = a_maxRecursionDepth;
+
+        const auto w = m_canvas->width();
+        const auto h = m_canvas->height();
         std::thread t1(&Raytracer::renderPixelRange, this, 0, 0, w/2, h/2);
         std::thread t2(&Raytracer::renderPixelRange, this, w/2+1, 0, w-1, h/2);
         std::thread t3(&Raytracer::renderPixelRange, this, 0, h/2+1, w/2, h-1);
@@ -124,7 +119,7 @@ namespace cook {
         t2.join();
         t3.join();
         t4.join();
-        m_canvas.writeToPNG(m_settings.outputFilename);
+        m_canvas->writeToPNG(a_filename);
     }
 
 }

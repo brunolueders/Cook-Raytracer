@@ -7,25 +7,15 @@ namespace cook {
 
     class Raytracer {
     protected:
-        Canvas m_canvas;
-        Scene  m_scene;
+        Canvas* m_canvas;
+        Scene*  m_scene;
 
-        struct {
-            const std::string outputFilename = "renders/box19.png";
-
-            const size_t vpWidth{ 200 };
-            const size_t vpHeight{ 150 };
-
-            const unsigned numSubpixels{ 2 };
-            const unsigned numSamplesPerSubpixel{ 2 };
-            const unsigned maxRecursionDepth{ 3 };
-
-        } const m_settings;
+        unsigned m_numSubpixels;
+        unsigned m_numSamplesPerSubpixel;
+        unsigned m_maxRecursionDepth;
 
     public:
-        Raytracer();
-
-        void init();
+        Raytracer(Canvas* a_canvas, Scene* a_scene);
 
         Colour trace(Ray& a_ray, unsigned a_depth = 0);
 
@@ -37,7 +27,8 @@ namespace cook {
 
         void renderPixelRange(const size_t x0, const size_t y0, const size_t x1, const size_t y1);
 
-        void render();
+        void render(std::string a_filename, unsigned a_numSubpixels, unsigned a_samplesPerSubpixel,
+                    unsigned a_maxRecursionDepth);
     };
 
 }
