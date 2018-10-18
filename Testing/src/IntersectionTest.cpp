@@ -3,6 +3,7 @@
 #include "Rectangle.hpp"
 #include "Sphere.hpp"
 #include "Triangle.hpp"
+#include "AABB.hpp"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -43,6 +44,13 @@ namespace Testing {
             Assert::IsTrue(info.normal.closeEnough(cook::Vec3{ -.10828f, 0.f, .00636943f }, 1e-6f));
 
             Assert::IsFalse(tri.intersect(cook::Ray{ from, cook::Vec3{ -1.f, 0.f, -2.f }, 0 }, &info));
+        }
+
+        TEST_METHOD(AABB_Intersects) {
+            cook::AABB aabb{ cook::Vec3{ -2.f, -4.f, -1.f }, cook::Vec3{ 1.f, 0.f, 3.f } };
+            cook::Vec3 from{ -5.f, 0.f, 2.f };
+            Assert::IsTrue(aabb.intersects(cook::Ray{ from, cook::Vec3{ 3.f, -3.f, -1.f }, 0 }));
+            Assert::IsFalse(aabb.intersects(cook::Ray{ from, cook::Vec3{ -7.f, 3.f, -1.f }, 0 }));
         }
     };
 }

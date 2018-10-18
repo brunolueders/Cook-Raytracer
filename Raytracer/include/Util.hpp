@@ -8,6 +8,7 @@
 /*******************************************************/
 #pragma once
 #include <cmath>
+#include <limits>
 
 namespace cook {
 
@@ -15,6 +16,7 @@ namespace cook {
     const static float PI180 = PI/180.f;
     const static float HALFPI = .5f*PI;
     const static float TWOPI = 2.f*PI;
+    const static float INF = std::numeric_limits<float>::infinity();
 
     extern float lerp(float a_ratio, float a_from, float a_to);
     extern float urand();

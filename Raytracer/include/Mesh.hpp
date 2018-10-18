@@ -10,6 +10,7 @@
 #include <vector>
 #include "Shape.hpp"
 #include "Triangle.hpp"
+#include "AABB.hpp"
 
 namespace cook {
 
@@ -18,6 +19,7 @@ namespace cook {
     class Mesh : public Shape {
     protected:
         TriangleList m_triangles;
+        AABB         m_aabb;
 
     public:
         Mesh(TriangleList a_triangles);
