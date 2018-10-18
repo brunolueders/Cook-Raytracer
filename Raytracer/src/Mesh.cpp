@@ -12,22 +12,8 @@ namespace cook {
     }
 
     bool Mesh::intersect(const Ray& a_ray, IntersectionInfo* a_info) {
-        // Find closest sub-mesh intersected by the ray
-        IntersectionInfo info, closestInfo;
-        closestInfo.param = a_ray.length();
-        closestInfo.index = m_triangles.size();
-        for(size_t i = 0; i < m_triangles.size(); ++i) {
-            if(m_triangles[i].intersect(a_ray, &info) && (info.param < closestInfo.param)) {
-                closestInfo = info;
-                closestInfo.index = i;
-            }
-        }
-
-        if(closestInfo.index == m_triangles.size()) {
-            return false;
-        }
-        *a_info = closestInfo;
-        return true;
+        // Find closest triangle intersected by the ray
+        return closestIntersection(m_triangles, a_ray, a_info);
     }
 
 }

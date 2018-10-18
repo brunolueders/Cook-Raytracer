@@ -23,8 +23,13 @@ namespace cook {
         ResourceMap() {}
 
         void addResources(std::istream& a_stream);
+        void addResources(nlohmann::json& a_json);
 
         ResourceType* get(std::string a_name);
+
+        void clear();
+
+        size_t count() const;
     };
 
     using MaterialMap = ResourceMap<Material>;

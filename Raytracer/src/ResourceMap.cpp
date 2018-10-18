@@ -6,17 +6,22 @@ namespace cook {
     void ResourceMap<ResourceType>::addResources(std::istream& a_stream) {
         nlohmann::json json;
         a_stream >> json;
-        if(json.is_array()) {
-            for(auto& elem: json) {
+        addResources(json);
+    }
+
+    template<typename ResourceType>
+    void ResourceMap<ResourceType>::addResources(nlohmann::json& a_json) {
+        if(a_json.is_array()) {
+            for(auto& elem: a_json) {
                 auto name = elem.at("name").get<std::string>();
-                auto ptr = ResourceParsing::parse<ResourceType>(elem);
-                m_resources.insert(std::make_pair(name, ptr));
+                auto res = ResourceParsing::parse<ResourceType>(elem);
+                m_resources.insert(std::make_pair(name, res));
             }
         }
         else {
-            auto name = json.at("name").get<std::string>();
-            auto ptr = ResourceParsing::parse<ResourceType>(json);
-            m_resources.insert(std::make_pair(name, ptr));
+            auto name = a_json.at("name").get<std::string>();
+            auto res = ResourceParsing::parse<ResourceType>(a_json);
+            m_resources.insert(std::make_pair(name, res));
         }
     }
 
@@ -27,6 +32,16 @@ namespace cook {
             return &it->second;
         }
         return nullptr;
+    }
+
+    template<typename ResourceType>
+    void ResourceMap<ResourceType>::clear() {
+        m_resources.clear();
+    }
+
+    template<typename ResourceType>
+    size_t ResourceMap<ResourceType>::count() const {
+        return m_resources.size();
     }
 
     template class ResourceMap<Material>;

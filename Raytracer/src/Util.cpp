@@ -19,4 +19,8 @@ namespace cook {
         return lerp(urand(), jitterMin, jitterMin + incr);
     }
 
+    bool closeEnough(float a_a, float a_b, float a_tol) {
+        return abs(a_a - a_b) < a_tol;
+    }
+
 }

@@ -14,6 +14,8 @@ namespace cook {
     // Represents the unit rectangle [-0.5,0.5]x[-0.5,0.5] in the xz-plane
     class Rectangle : public Shape {
     public:
+        static Rectangle unit;
+
         Rectangle();
 
         bool intersect(const Ray& a_ray, IntersectionInfo* a_info) override;

@@ -2,6 +2,12 @@
 
 namespace cook {
 
+    Triangle Triangle::unit {
+        Vertex{ Vec3{ -.5f, 0.f, -1.f/(2.f*sqrt(3.f)) }, Vec2{ 0.f, 0.f }, Vec3::unitY },
+        Vertex{ Vec3{ .5f, 0.f, -1.f/(2.f*sqrt(3.f)) } , Vec2{ 1.f, 0.f }, Vec3::unitY },
+        Vertex{ Vec3{ 0.f, 0.f, 1.f/sqrt(3.f) }        , Vec2{ .5f, 1.f }, Vec3::unitY }
+    };
+
     Triangle::Triangle(Vertex a_v0, Vertex a_v1, Vertex a_v2) :
         Shape{ ShapeType::Triangle },
         m_v0{ a_v0 },

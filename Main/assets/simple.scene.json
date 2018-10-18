@@ -1,0 +1,109 @@
+{
+  "ambient-light": [0.2, 0.2, 0.2],
+  "background-colour": "#000000",
+  "camera": {
+  	"position": [0, 25, 55],
+    "target": [0, 25, 0],
+    "standard-up": [0, -1, 0],
+    "fov": 60,
+    "far": 400,
+    "focal-length": 55,
+    "aperture": 1
+  },
+  "resources": [
+  	{
+  		"type": "material",
+  		"data": "assets/simple.material.json"
+  	},
+  	{
+  		"type": "mesh",
+  		"data": "assets/cube.mesh.json"
+  	}
+  ],
+  "lights": [
+    {
+      "position": [0, 40, 0 ],
+      "colour": [1.2, 1.2, 1.2 ],
+      "radius": 5
+    },
+    {
+    	"position": [0, 25, 55],
+    	"colour": [0.1, 0.1, 0.1],
+    	"radius": 10
+    }
+  ],
+  "objects": [
+  	{
+  		"type": "rectangle",
+  		"material": "whiteWall",
+  		"transform": {
+  			"position": [0, 0, 0],
+  			"rotation": [0, 0, 0],
+  			"scale": [50, 1, 50]
+  		}
+  	},
+  	{
+  		"type": "rectangle",
+  		"material": "whiteWall",
+  		"transform": {
+  			"position": [0, 50, 0],
+  			"rotation": [180, 0, 0],
+  			"scale": [50, 1, 50]
+  		}
+  	},
+  	{
+  		"type": "rectangle",
+  		"material": "whiteWall",
+  		"transform": {
+  			"position": [0, 25, -25],
+  			"rotation": [90, 0, 0],
+  			"scale": [50, 1, 50]
+  		}
+  	},
+  	{
+  		"type": "rectangle",
+  		"material": "redWall",
+  		"transform": {
+  			"position": [25, 25, 0],
+  			"rotation": [0, 0, 90],
+  			"scale": [50, 1, 50]
+  		}
+  	},
+  	{
+  		"type": "rectangle",
+  		"material": "blueWall",
+  		"transform": {
+  			"position": [-25, 25, 0],
+  			"rotation": [0, 0, -90],
+  			"scale": [50, 1, 50]
+  		}
+  	},
+  	{
+  		"type": "sphere",
+  		"material": "frostedGlass",
+  		"transform": {
+  			"position": [10, 10, -5],
+  			"rotation": [0, 0, 0],
+  			"scale": [10, 10, 10]
+  		}
+  	},
+  	{
+  		"type": "sphere",
+  		"material": "purpleMirror",
+  		"transform": {
+  			"position": [-10, 30, 0],
+  			"rotation": [0, 0, 0],
+  			"scale": [8, 8, 8]
+  		}
+  	},
+  	{
+  		"type": "unit-cube",
+  		"material": "blueDiffuse",
+  		"transform": {
+  			"position": [-15, 0, 5],
+  			"rotation": [0, 30, 0],
+  			"scale": [12, 6, 6]
+  		}
+  	}
+  ]
+}

@@ -23,6 +23,7 @@ namespace cook{
 
     public:
         Transform();
+        Transform(Transform& a_transform);
 
         Vec3 pointToWorld(Vec3 a_v);
         Vec3 pointToLocal(Vec3 a_v);
@@ -31,13 +32,13 @@ namespace cook{
         Vec3 normalToWorld(Vec3 a_v);
         Vec3 normalToLocal(Vec3 a_v);
 
-        void translate(const Vec3 a_v);
-        void rotate(const Vec3 a_v);
-        void scale(const Vec3 a_v);
+        Transform& translate(const Vec3 a_v);
+        Transform& rotate(const Vec3 a_v);
+        Transform& scale(const Vec3 a_v);
 
-        void setPosition(const Vec3 a_v);
-        void setRotation(const Vec3 a_v);
-        void setScale(const Vec3 a_v);
+        Transform& setPosition(const Vec3 a_v);
+        Transform& setRotation(const Vec3 a_v);
+        Transform& setScale(const Vec3 a_v);
 
         Vec3  position() const;
         Vec3  rotation() const;

@@ -19,6 +19,10 @@ namespace cook {
         Vec3   m_e1, m_e2;
 
     public:
+        // The equilateral triangle in the xz-plane with all side lengths
+        // equal to 1 and centroid at the origin
+        static Triangle unit;
+
         Triangle(Vertex a_v0, Vertex a_v1, Vertex a_v2);
 
         bool intersect(const Ray& a_ray, IntersectionInfo* a_info) override;

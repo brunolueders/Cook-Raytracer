@@ -11,11 +11,13 @@
 
 namespace cook {
 
+    class Material;
+
     class IntersectionInfo {
     public:
-        Vec3   point, normal;
-        float  param;
-        size_t index;
+        Vec3      point, normal;
+        float     param;
+        Material* material;
     };
 
     class Ray {
