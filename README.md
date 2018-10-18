@@ -7,6 +7,7 @@ Distribution raytracer based on [Robert L. Cook's seminal 1984 paper](http://gec
 * Glossy reflections
 * Translucency
 * Depth of field
+* Anti-aliasing
 * Multithreaded rendering
 * Triangle mesh support
 
