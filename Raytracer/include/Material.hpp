@@ -21,7 +21,8 @@ namespace cook {
         float  m_refractiveIndex{ 1.f };
         bool   m_reflective{ false }, m_transparent{ false };
 
-        Canvas* m_texture{ nullptr };
+        std::string m_textureID;
+        Canvas*     m_texture{ nullptr };
 
         std::array<float, 10> m_reflectanceFunction{};
         std::array<float, 10> m_transmittanceFunction{};
@@ -29,16 +30,21 @@ namespace cook {
     public:
         Material(const Colour& a_ambient, const Colour& a_diffuse, const Colour& a_specular,
                  const Colour& a_transmissive, float a_shininess, float a_translucency,
-                 float a_refractiveIndex);
+                 float a_refractiveIndex, std::string a_textureID);
 
-        Colour  ambient() const;
-        Colour  diffuse() const;
-        Colour  specular() const;
-        Colour  transmissive() const;
-        float   shininess() const;
-        float   translucency() const;
-        float   refractiveIndex() const;
-        Canvas* texture();
+        Colour      ambient(Vec2 a_uv) const;
+        Colour      diffuse(Vec2 a_uv) const;
+        Colour      specular() const;
+        Colour      transmissive() const;
+        float       shininess() const;
+        float       translucency() const;
+        float       refractiveIndex() const;
+        std::string textureID() const;
+        Canvas*     texture();
+
+        void setTexture(Canvas* a_texture);
+
+        Colour sampleTexture(Vec2 a_uv) const;
         
         // Takes an incident ray and the intersecion normal and returns
         // a random reflection/refraction direction

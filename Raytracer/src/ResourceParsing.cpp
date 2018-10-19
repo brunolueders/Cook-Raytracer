@@ -66,8 +66,9 @@ namespace cook {
             auto shininess = a_json.at("shininess").get<float>();
             auto translucency = a_json.at("translucency").get<float>();
             auto refractiveIndex = a_json.at("refractive-index").get<float>();
+            auto texture = a_json.at("texture").get<std::string>();
             return Material{ ambient, diffuse, specular,
-                transmissive, shininess, translucency, refractiveIndex };
+                transmissive, shininess, translucency, refractiveIndex, texture };
         }
 
         template<>

@@ -18,6 +18,7 @@ namespace cook {
 
     class Scene {
     protected:
+        TextureMap           m_textures;
         MaterialMap          m_materials;
         MeshMap              m_meshes;
         std::vector<Object*> m_objects;

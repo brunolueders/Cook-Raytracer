@@ -39,7 +39,15 @@ namespace cook {
 
         for(auto& res: json.at("resources")) {
             auto resType = res.at("type").get<std::string>();
-            if(resType.compare("material") == 0) {
+            if(resType.compare("texture") == 0) {
+                if(res.at("data").is_object()) {
+                    m_textures.addResources(res.at("data"));
+                }
+                else {
+                    m_textures.addResources(std::ifstream(res.at("data").get<std::string>()));
+                }
+            }
+            else if(resType.compare("material") == 0) {
                 if(res.at("data").is_object()) {
                     m_materials.addResources(res.at("data"));
                 }
@@ -54,6 +62,13 @@ namespace cook {
                 else {
                     m_meshes.addResources(std::ifstream(res.at("data").get<std::string>()));
                 }
+            }
+        }
+
+        for(auto it = m_materials.begin(); it != m_materials.end(); ++it) {
+            auto textureID = it->second.textureID();
+            if(!textureID.empty()) {
+                it->second.setTexture(m_textures.get(textureID));
             }
         }
 

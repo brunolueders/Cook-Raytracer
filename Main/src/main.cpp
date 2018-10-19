@@ -29,6 +29,9 @@ int main(void) {
     cook::Raytracer renderer;
     renderer.settings().canvas = &canvas;
     renderer.settings().scene = &scene;
+    renderer.settings().numSubpixels = 4;
+    renderer.settings().numSamplesPerSubpixel = 20;
+    renderer.settings().maxRecursionDepth = 6;
 
     std::promise<void> stopSignal;
     std::thread progressThread(&outputProgress, stopSignal.get_future(), &renderer);
@@ -47,6 +50,6 @@ int main(void) {
     stopSignal.set_value();
     progressThread.join();
 
-    canvas.writeToPNG("simple1.png");
+    canvas.writeToPNG("simple4.png");
     return 0;
 }

@@ -35,6 +35,16 @@ namespace cook {
     }
 
     template<typename ResourceType>
+    typename ResourceMap<ResourceType>::iterator ResourceMap<ResourceType>::begin() {
+        return m_resources.begin();
+    }
+
+    template<typename ResourceType>
+    typename ResourceMap<ResourceType>::iterator ResourceMap<ResourceType>::end() {
+        return m_resources.end();
+    }
+
+    template<typename ResourceType>
     void ResourceMap<ResourceType>::clear() {
         m_resources.clear();
     }

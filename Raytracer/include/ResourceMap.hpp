@@ -20,12 +20,16 @@ namespace cook {
         std::map<std::string, ResourceType> m_resources;
 
     public:
+        using iterator = typename std::map<std::string, ResourceType>::iterator;
+
         ResourceMap() {}
 
         void addResources(std::istream& a_stream);
         void addResources(nlohmann::json& a_json);
 
         ResourceType* get(std::string a_name);
+        iterator      begin();
+        iterator      end();
 
         void clear();
 

@@ -18,7 +18,14 @@
   	{
   		"type": "mesh",
   		"data": "assets/cube.mesh.json"
-  	}
+  	},
+    {
+      "type": "texture",
+      "data": {
+        "name": "metal",
+        "file-name": "assets/persianMetal_1024.png"
+      }
+    }
   ],
   "lights": [
     {
@@ -89,9 +96,9 @@
   	},
   	{
   		"type": "sphere",
-  		"material": "purpleMirror",
+  		"material": "shinyMetal",
   		"transform": {
-  			"position": [-10, 30, 0],
+  			"position": [-10, 30, -10],
   			"rotation": [0, 0, 0],
   			"scale": [8, 8, 8]
   		}

@@ -7,7 +7,8 @@
     "transmissive": "#000000",
     "shininess": 1,
     "translucency": 1,
-    "refractive-index": 1
+    "refractive-index": 1,
+    "texture": ""
   },
   {
     "name": "redWall",
@@ -17,7 +18,8 @@
     "transmissive": "#000000",
     "shininess": 1,
     "translucency": 1,
-    "refractive-index": 1
+    "refractive-index": 1,
+    "texture": ""
   },
   {
     "name": "blueWall",
@@ -27,7 +29,8 @@
     "transmissive": "#000000",
     "shininess": 1,
     "translucency": 1,
-    "refractive-index": 1
+    "refractive-index": 1,
+    "texture": ""
   },
   {
     "name": "frostedGlass",
@@ -37,7 +40,8 @@
     "transmissive": "#ffffff",
     "shininess": 10,
     "translucency": 10,
-    "refractive-index": 1.05
+    "refractive-index": 1.05,
+    "texture": ""
   },
   {
     "name": "purpleMirror",
@@ -47,7 +51,8 @@
     "transmissive": "#000000",
     "shininess": 1000,
     "translucency": 1,
-    "refractive-index": 1
+    "refractive-index": 1,
+    "texture": ""
   },
   {
     "name": "blueDiffuse",
@@ -57,6 +62,18 @@
     "transmissive": "#000000",
     "shininess": 1,
     "translucency": 1,
-    "refractive-index": 1
+    "refractive-index": 1,
+    "texture": ""
+  },
+  {
+    "name": "shinyMetal",
+    "ambient": "#ffffff",
+    "diffuse": "#ffffff",
+    "specular": "#444444",
+    "transmissive": "#000000",
+    "shininess": 5,
+    "translucency": 1,
+    "refractive-index": 1,
+    "texture": "metal"
   }
 ]

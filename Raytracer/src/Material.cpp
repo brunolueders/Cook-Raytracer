@@ -87,7 +87,7 @@ namespace cook {
 
     Material::Material(const Colour & a_ambient, const Colour & a_diffuse, const Colour & a_specular,
                        const Colour & a_transmissive, float a_shininess, float a_translucency,
-                       float a_refractiveIndex) :
+                       float a_refractiveIndex, std::string a_textureID) :
         m_ambient{a_ambient},
         m_diffuse{a_diffuse},
         m_specular{a_specular},
@@ -96,7 +96,8 @@ namespace cook {
         m_translucency{a_translucency},
         m_refractiveIndex{a_refractiveIndex},
         m_transparent{ a_transmissive != Colour() },
-        m_reflective{ a_specular != Colour{} }
+        m_reflective{ a_specular != Colour{} },
+        m_textureID{ a_textureID }
     {
         if(m_reflective) {
             m_reflectanceFunction = _hemisphereSampling::_createLookupTable(m_shininess);
@@ -107,12 +108,12 @@ namespace cook {
         }
     }
 
-    Colour Material::ambient() const {
-        return m_ambient;
+    Colour Material::ambient(Vec2 a_uv) const {
+        return isTextured() ? m_ambient*sampleTexture(a_uv) : m_diffuse;
     }
 
-    Colour Material::diffuse() const {
-        return m_diffuse;
+    Colour Material::diffuse(Vec2 a_uv) const {
+        return isTextured() ? m_diffuse*sampleTexture(a_uv) : m_diffuse;
     }
 
     Colour Material::specular() const {
@@ -135,8 +136,22 @@ namespace cook {
         return m_refractiveIndex;
     }
 
+    std::string Material::textureID() const {
+        return m_textureID;
+    }
+
     Canvas* Material::texture() {
         return m_texture;
+    }
+
+    void Material::setTexture(Canvas* a_texture) {
+        m_texture = a_texture;
+    }
+
+    Colour Material::sampleTexture(Vec2 a_uv) const {
+        auto x = static_cast<size_t>(a_uv.x*m_texture->width());
+        auto y = static_cast<size_t>(a_uv.y*m_texture->height());
+        return m_texture->pixel(x, y);
     }
 
     Vec3 Material::sampleReflectionFunction(Ray a_ray, Vec3 a_normal) const {

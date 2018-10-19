@@ -41,7 +41,7 @@ namespace cook {
             auto eps = 1e-3f;
 
             // Shadow rays
-            colour = m_settings.scene->ambientLight()*mat->ambient();
+            colour = m_settings.scene->ambientLight()*mat->ambient(info.texCoords);
             for(auto lightIt = m_settings.scene->lightsBegin(); lightIt != m_settings.scene->lightsEnd(); ++lightIt) {
                 // Construct shadow ray to random point on light source
                 auto samplePoint = lightIt->sample(info.point, info.normal, a_ray.prototype());
@@ -50,7 +50,7 @@ namespace cook {
                     // Phong shading
                     auto intensity = shadowRay.direction().dot(info.normal);
                     if(intensity > 0.f) {
-                        colour += intensity*lightIt->colour()*mat->diffuse();
+                        colour += intensity*lightIt->colour()*mat->diffuse(info.texCoords);
                     }
                 }
             }
