@@ -35,6 +35,7 @@ namespace cook {
 
         void setPixel(const std::size_t a_x, const std::size_t a_y, const Colour& a_col);
         void writeToPNG(const std::string a_file);
+        void loadFromPNG(const std::string a_file);
     };
 
 }

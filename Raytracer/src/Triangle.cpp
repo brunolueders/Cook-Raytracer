@@ -43,9 +43,11 @@ namespace cook {
 
         auto t = e2.dot(q)*invDet;
         if(t > 0.f && t < a_ray.length()) {
+            auto w = (1.f - u - v);
             a_info->param = t;
             a_info->point = a_ray.pointAt(t);
-            a_info->normal = (1.f - u - v)*m_v0.normal + u*m_v1.normal + v*m_v2.normal;
+            a_info->normal = w*m_v0.normal + u*m_v1.normal + v*m_v2.normal;
+            a_info->texCoords = w*m_v0.texCoords + u*m_v1.texCoords + v*m_v2.texCoords;
             return true;
         }
         return false;

@@ -115,5 +115,12 @@ namespace cook {
             return Camera{ position, target, stdup, fov, far, focalLength, aperture };
         }
 
+        template<>
+        Canvas parse(nlohmann::json& a_json) {
+            Canvas img;
+            img.loadFromPNG(a_json.at("file-name").get<std::string>());
+            return img;
+        }
+
     }
 }

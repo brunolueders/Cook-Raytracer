@@ -8,6 +8,7 @@
 /*******************************************************/
 #pragma once
 #include "Vec3.hpp"
+#include "Vec2.hpp"
 
 namespace cook {
 
@@ -16,6 +17,7 @@ namespace cook {
     class IntersectionInfo {
     public:
         Vec3      point, normal;
+        Vec2      texCoords;
         float     param;
         Material* material;
     };

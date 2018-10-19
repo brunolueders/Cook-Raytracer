@@ -1,4 +1,5 @@
 #include "Sphere.hpp"
+#include <cmath>
 
 namespace cook {
 
@@ -27,6 +28,10 @@ namespace cook {
             a_info->param = t;
             a_info->point = a_ray.pointAt(t);
             a_info->normal = a_info->point; // No need to normalise yet!
+            a_info->texCoords = Vec2{
+                .5f + atan2(a_info->point.z, a_info->point.x)/TWOPI,
+                .5f - asin(a_info->point.y)/PI
+            };
             return true;
         }
         return false;

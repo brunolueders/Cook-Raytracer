@@ -9,7 +9,7 @@
 #pragma once
 #include <array>
 #include "Ray.hpp"
-#include "Colour.hpp"
+#include "Canvas.hpp"
 
 namespace cook {
 
@@ -21,6 +21,8 @@ namespace cook {
         float  m_refractiveIndex{ 1.f };
         bool   m_reflective{ false }, m_transparent{ false };
 
+        Canvas* m_texture{ nullptr };
+
         std::array<float, 10> m_reflectanceFunction{};
         std::array<float, 10> m_transmittanceFunction{};
 
@@ -29,13 +31,14 @@ namespace cook {
                  const Colour& a_transmissive, float a_shininess, float a_translucency,
                  float a_refractiveIndex);
 
-        Colour ambient() const;
-        Colour diffuse() const;
-        Colour specular() const;
-        Colour transmissive() const;
-        float  shininess() const;
-        float  translucency() const;
-        float  refractiveIndex() const;
+        Colour  ambient() const;
+        Colour  diffuse() const;
+        Colour  specular() const;
+        Colour  transmissive() const;
+        float   shininess() const;
+        float   translucency() const;
+        float   refractiveIndex() const;
+        Canvas* texture();
         
         // Takes an incident ray and the intersecion normal and returns
         // a random reflection/refraction direction
@@ -44,6 +47,7 @@ namespace cook {
 
         bool isReflective()  const;
         bool isTransparent() const;
+        bool isTextured() const;
     };
 
 }

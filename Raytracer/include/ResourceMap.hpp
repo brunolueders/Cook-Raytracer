@@ -34,5 +34,6 @@ namespace cook {
 
     using MaterialMap = ResourceMap<Material>;
     using MeshMap = ResourceMap<Mesh>;
+    using TextureMap = ResourceMap<Canvas>;
 
 }

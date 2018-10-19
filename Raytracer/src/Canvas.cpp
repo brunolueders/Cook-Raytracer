@@ -4,7 +4,7 @@
 
 namespace cook {
     Canvas::Canvas() :
-        Canvas{ 100, 100 }
+        Canvas{ 0, 0 }
     {}
 
     Canvas::Canvas(std::size_t a_width, std::size_t a_height) :
@@ -32,7 +32,6 @@ namespace cook {
     }
 
     Colour Canvas::pixel(const std::size_t a_x, const std::size_t a_y) const {
-        assert((a_x < m_width) && (a_y < m_height));
         return m_pixels[a_y*m_width + a_x];
     }
 
@@ -45,17 +44,16 @@ namespace cook {
     }
 
     void Canvas::setPixel(const std::size_t a_x, const std::size_t a_y, const Colour & a_col) {
-        assert((a_x < m_width) && (a_y < m_height));
         m_pixels[a_y*m_width + a_x] = a_col;
     }
 
     void Canvas::writeToPNG(const std::string a_file) {
-        // Convert rgb colour data (range: 0.0 - 1.0) to bytes (0 - 256)
+        // Convert rgb colour data (range: 0.0 - 1.0) to bytes (0 - 255)
         using ubyte = unsigned char;
         std::vector<ubyte> data(4*m_size);
-        for(std::size_t i = 0; i < m_size; ++i) {
+        for(size_t i = 0; i < m_size; ++i) {
             m_pixels[i].clamp();
-            m_pixels[i] *= 255.;
+            m_pixels[i] *= 255.f;
             data[4*i] = static_cast<ubyte>(m_pixels[i].r);
             data[4*i+1] = static_cast<ubyte>(m_pixels[i].g);
             data[4*i+2] = static_cast<ubyte>(m_pixels[i].b);
@@ -65,7 +63,27 @@ namespace cook {
         // Output to file
         auto err = lodepng::encode(a_file, data, m_width, m_height);
         if(err) {
-            throw ("LodePNG: Could not write to file " + a_file);
+            throw std::exception(("LodePNG: Could not write to file " + a_file).c_str());
+        }
+    }
+
+    void Canvas::loadFromPNG(const std::string a_file) {
+        // Load from file
+        std::vector<unsigned char> data;
+        auto err = lodepng::decode(data, m_width, m_height, a_file);
+        if(err) {
+            throw std::exception(("LodePNG: Could not read from file " + a_file).c_str());
+        }
+
+        m_size = m_width*m_height;
+        m_aspect = static_cast<float>(m_width)/m_height;
+        m_pixels.resize(m_size);
+
+        // Convert bytes (0 - 255) to float rgb (0.0 - 1.0)
+        for(size_t i = 0; i < m_size; ++i) {
+            m_pixels[i].r = static_cast<float>(data[4*i])/255.f;
+            m_pixels[i].g = static_cast<float>(data[4*i+1])/255.f;
+            m_pixels[i].b = static_cast<float>(data[4*i+2])/255.f;
         }
     }
 

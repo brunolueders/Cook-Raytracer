@@ -135,6 +135,10 @@ namespace cook {
         return m_refractiveIndex;
     }
 
+    Canvas* Material::texture() {
+        return m_texture;
+    }
+
     Vec3 Material::sampleReflectionFunction(Ray a_ray, Vec3 a_normal) const {
         // Create local coordinate system
         auto reflDir = a_ray.direction() - 2.f*a_normal.dot(a_ray.direction())*a_normal;
@@ -193,6 +197,10 @@ namespace cook {
 
     bool Material::isTransparent() const {
         return m_transparent;
+    }
+
+    bool Material::isTextured() const {
+        return (m_texture != nullptr);
     }
 
 }

@@ -18,6 +18,7 @@ namespace cook {
                 a_info->param = t;
                 a_info->point = Vec3{ x, 0.f, z };
                 a_info->normal = Vec3::unitY;
+                a_info->texCoords = Vec2{ x + .5f, z + .5f };
                 return true;
             }
         }

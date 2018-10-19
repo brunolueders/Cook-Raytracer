@@ -46,5 +46,6 @@ namespace cook {
 
     template class ResourceMap<Material>;
     template class ResourceMap<Mesh>;
+    template class ResourceMap<Canvas>;
 
 }
