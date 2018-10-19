@@ -109,7 +109,7 @@ namespace cook {
     }
 
     Colour Material::ambient(Vec2 a_uv) const {
-        return isTextured() ? m_ambient*sampleTexture(a_uv) : m_diffuse;
+        return isTextured() ? m_ambient*sampleTexture(a_uv) : m_ambient;
     }
 
     Colour Material::diffuse(Vec2 a_uv) const {
@@ -149,8 +149,8 @@ namespace cook {
     }
 
     Colour Material::sampleTexture(Vec2 a_uv) const {
-        auto x = static_cast<size_t>(a_uv.x*m_texture->width());
-        auto y = static_cast<size_t>(a_uv.y*m_texture->height());
+        auto x = static_cast<size_t>(a_uv.x*m_texture->width()-1);
+        auto y = static_cast<size_t>(a_uv.y*m_texture->height()-1);
         return m_texture->pixel(x, y);
     }
 
