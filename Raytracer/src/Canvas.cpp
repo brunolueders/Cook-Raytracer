@@ -39,7 +39,7 @@ namespace cook {
         // Convert pixel coordinates to a point on a camera's
         // near plane
         return Vec3{ (2.f*a_u/m_width - 1.f)*m_aspect,
-                      2.f*a_v/m_height - 1.f,
+                      1.0f - 2.f*a_v/m_height,
                       a_near };
     }
 

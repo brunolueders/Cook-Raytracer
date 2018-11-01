@@ -149,8 +149,8 @@ namespace cook {
     }
 
     Colour Material::sampleTexture(Vec2 a_uv) const {
-        auto x = static_cast<size_t>(a_uv.x*m_texture->width()-1);
-        auto y = static_cast<size_t>(a_uv.y*m_texture->height()-1);
+        auto x = static_cast<size_t>(a_uv.x*(m_texture->width()-1));
+        auto y = static_cast<size_t>((1.f-a_uv.y)*(m_texture->height()-1));
         return m_texture->pixel(x, y);
     }
 
